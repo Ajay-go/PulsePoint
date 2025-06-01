@@ -1,0 +1,23 @@
+#cust_slider {
+  display: flex;
+  gap: 2rem;
+  animation: scrollSlider 30s linear infinite;
+  width: max-content; /* So it scrolls full content */
+}
+
+#review {
+  margin-top: 8%;
+  background-color: beige;
+  overflow: hidden; /* Hides overflow as tiles slide */
+  width: 100%;
+  padding: 1rem 0;
+}
+
+@keyframes scrollSlider {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

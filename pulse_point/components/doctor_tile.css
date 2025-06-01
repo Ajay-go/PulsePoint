@@ -1,0 +1,23 @@
+#doctor_details{
+   background-color: #C4C8CB;
+   width: 232px;
+   height: auto;
+   font-size: 10px;
+   color: black;
+   border-radius: 5px;
+   border:3px ridge black;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+img{
+   margin-top: 10px;
+   width: 200px;
+   height: 200px;
+}
+h2{
+   margin-top: 0px;
+}
+button{
+   margin-bottom: 10px;
+   border-radius: 5px;
+   width:auto;
+}
