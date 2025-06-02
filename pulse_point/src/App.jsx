@@ -1,21 +1,27 @@
 import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
 import Doc_tile from '../components/doctor_tiles'
 import Slider from '../components/doctor_slider'
-import Shortcut_bar from '../components/shortcut_bar'
 import Searchbar from '../components/Search_bar'
 import Customer_Tile from '../components/customer_tile'
 import Customer_slider from '../components/Customer_slider'
-function App() {
+import HomePage from '../pages/Home_page'
+import Speciality_page from '../pages/Speciality_page'
+// Create simple page components for demonstration
 
+
+
+
+function App() {
   return (
-    <>
-     <div id='main_page'>
-        <Searchbar></Searchbar>
-        <Shortcut_bar></Shortcut_bar>
-        <Slider></Slider>
-        <Customer_slider></Customer_slider>
-     </div>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        
+        <Route path="/speciality/:speciality" element={<Speciality_page />} />
+      </Routes>
+    </Router>
   )
 }
 

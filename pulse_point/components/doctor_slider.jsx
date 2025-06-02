@@ -1,74 +1,30 @@
 import React from "react";
 import Doc_tile from "./doctor_tiles";
-import doc_image from "../src/assets/image.jpg";
-import './tile_slider.css'
+import './tile_slider.css';
+import doctor_data from '../src/assets/doctor_data.json';
 
 function Slider() {
   return (
     <>
       <div id="slider">
-        <Doc_tile
-          img_url={doc_image}
-          name={"Ajay Gour"}
-          speciality={"Physiotherapist"}
-          expirience={"10"}
-        ></Doc_tile>
-        <Doc_tile
-          img_url={doc_image}
-          name={"Ajay Gour"}
-          speciality={"Physiotherapist"}
-          expirience={"10"}
-        ></Doc_tile>
-        <Doc_tile
-          img_url={doc_image}
-          name={"Ajay Gour"}
-          speciality={"Physiotherapist"}
-          expirience={"10"}
-        ></Doc_tile>
-        <Doc_tile
-          img_url={doc_image}
-          name={"Ajay Gour"}
-          speciality={"Physiotherapist"}
-          expirience={"10"}
-        ></Doc_tile>
-        <Doc_tile
-          img_url={doc_image}
-          name={"Ajay Gour"}
-          speciality={"Physiotherapist"}
-          expirience={"10"}
-        ></Doc_tile>
-        <Doc_tile
-          img_url={doc_image}
-          name={"Ajay Gour"}
-          speciality={"Physiotherapist"}
-          expirience={"10"}
-        ></Doc_tile>
-        <Doc_tile
-          img_url={doc_image}
-          name={"Ajay Gour"}
-          speciality={"Physiotherapist"}
-          expirience={"10"}
-        ></Doc_tile>
-        <Doc_tile
-          img_url={doc_image}
-          name={"Ajay Gour"}
-          speciality={"Physiotherapist"}
-          expirience={"10"}
-        ></Doc_tile>
-        <Doc_tile
-          img_url={doc_image}
-          name={"Ajay Gour"}
-          speciality={"Physiotherapist"}
-          expirience={"10"}
-        ></Doc_tile>
-        <Doc_tile
-          img_url={doc_image}
-          name={"Ajay Gour"}
-          speciality={"Physiotherapist"}
-          expirience={"10"}
-        ></Doc_tile>
+        {Object.entries(doctor_data).map(([speciality, doctors]) => (
+          <div key={speciality} className="mb-8">
+            <div className="doctor-list">
+              {doctors.map((doc, index) => (
+                <Doc_tile
+                  key={index}
+                  img_url={doc.img_src}     
+                  name={doc.name}
+                  speciality={doc.speciality}
+                  expirience={doc.experience_years}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );
 }
+
 export default Slider;

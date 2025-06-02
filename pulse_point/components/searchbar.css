@@ -3,29 +3,35 @@
   height: 60px;
   padding-top: 30px;
   position: relative; /* Required for absolute positioning */
+ 
 }
 
 #searchbar input {
-  width: 82%;
+  width: 90%;
   height: 45px;
   border-radius: 5px;
   padding-right: 170px; /* space for the overlapping button */
   box-sizing: border-box;
   border: 1px solid #ccc;
   padding-left: 5px;
-  font-size: 20px;
+  font-size: 15px;
   border: 2px solid black;
+   background-image: url("../src/assets/bg7.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode:darken;
 }
 
 #searchbar button {
+  color: black;
+  font-weight: bold;
   position: absolute;
   top: 35px; /* aligns with padding-top */
-  right: calc(50% - 615px + 10px); /* adjusts based on input width */
+  right: calc(50% - 670px + 10px); /* adjusts based on input width */
   width: 160px;
   height: 35px;
   border: none;
   background-color: #c4c4c4;
-  color: white;
   border-radius: 5px;
   cursor: pointer;
 }

@@ -3,11 +3,16 @@
   gap: 2rem;
   animation: scrollSlider 30s linear infinite;
   width: max-content; /* So it scrolls full content */
+  
 }
-
+h2{
+  color: black;
+  font-size:large;
+  font-weight: bold;
+}
 #review {
   margin-top: 8%;
-  background-color: beige;
+  background-color: #fafafa;
   overflow: hidden; /* Hides overflow as tiles slide */
   width: 100%;
   padding: 1rem 0;

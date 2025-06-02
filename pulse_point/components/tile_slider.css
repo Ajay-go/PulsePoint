@@ -8,3 +8,8 @@
   margin-left: 40px;
   margin-right: 40px;
 }
+.doctor-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
