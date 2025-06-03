@@ -8,6 +8,10 @@ function Searchbar() {
    function handle_selection(e){
       Navigate(`/speciality/${e.target.value}`)
    };
+
+   function handle_click(){
+      Navigate("/Signup")
+   }
   return (
     <>
       <div id="searchbar">
@@ -27,7 +31,7 @@ function Searchbar() {
           <option value="Psychiatrist" />
         </datalist>
 
-        <button>Signup</button>
+        <button onClick={handle_click}>Signup</button>
       </div>
     </>
   );
