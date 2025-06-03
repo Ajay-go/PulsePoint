@@ -1,0 +1,156 @@
+/* Header */
+header {
+  background-color: #f05f70;
+  text-align: center;
+  padding: 15px 0;
+  color: white;
+  font-weight: bold;
+  font-size: 2.5rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+header h2 {
+  margin: 0;
+  font-size: 3.0rem; 
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+main {
+  margin-top: 30px;
+}
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.signup-box {
+  display: flex;
+  width: 900px;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.signup-left {
+  flex: 1;
+  padding: 30px;
+  background-color: white;
+}
+
+.signup-left h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.signup-left form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.signup-left label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.signup-left input[type="text"],
+.signup-left input[type="email"],
+.signup-left input[type="password"],
+.signup-left input[type="tel"] {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.signup-left fieldset {
+  border: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.gender-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  margin-left: 20px;
+}
+
+.signup-left input[type="submit"] {
+  background-color: #f05f70;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.signup-left input[type="submit"]:hover {
+  background-color: #d64b5c;
+}
+
+
+.signup-right {
+  flex: 1;
+  background-color: #f05f70;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.signup-right h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.signup-right p {
+  margin-bottom: 20px;
+}
+
+.signup-right button {
+  background-color: white;
+  color: #f05f70;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signup-right button:hover {
+  background-color: #fcd4d8;
+}
+
+/* Footer */
+footer {
+  background-color: #f05f70;
+  color: white;
+  text-align: center;
+  padding: 10px 0;      
+  font-size: 0.9rem;
+  margin-top: 40px;
+  width: 60%;         
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+}
