@@ -1,3 +1,32 @@
+#header{
+  display: flex;
+  flex-wrap: nowrap;
+}
+#head{
+   display: flex;
+  flex-wrap: nowrap;
+  margin-left: 60px;
+}
+#logo img{
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  margin-right: 3px;
+}
+#brand_name h1{
+  color: blueviolet;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  font-weight: bolder;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size:2.4vw;
+  margin-bottom: 0px;
+}
+#brand_name h3{
+  font-weight: bolder;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+ 
+  margin-top: 0px;
+}
 #searchbar {
   width: 100%;
   height: 60px;
@@ -6,32 +35,46 @@
  
 }
 
+#input_field{
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 #searchbar input {
-  width: 90%;
+  width: 860px;
+  border: none;
   height: 45px;
-  border-radius: 5px;
-  padding-right: 170px; /* space for the overlapping button */
+  margin-left: 35px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
   padding-left: 5px;
   font-size: 15px;
-  border: 2px solid black;
-   background-image: url("../src/assets/bg7.jpg");
+  background-image: url("../src/assets/bg7.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-blend-mode:darken;
 }
-
-#searchbar button {
+.link{
+  text-decoration: none;
+  color: inherit;
+}
+#searchbar input:hover{
+  background-color: #c4c4c4;
+  transition-duration: 0.3s;
+}
+#signup_button  button {
   color: black;
   font-weight: bold;
   position: absolute;
-  top: 35px; /* aligns with padding-top */
-  right: calc(50% - 670px + 10px); /* adjusts based on input width */
   width: 160px;
-  height: 35px;
+  height: 45px;
   border: none;
   background-color: #c4c4c4;
-  border-radius: 5px;
   cursor: pointer;
+  margin-top: 30px;
+  
+}
+
+#signup_button button:hover{
+  background-color: cadetblue;
+  transition-duration: 0.3s;
 }

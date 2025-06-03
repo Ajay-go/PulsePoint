@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './SignupPage.css';
+import { useNavigate } from 'react-router-dom';
 
-const SignupPage = () => {
+const Signup_page = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     username: '',
@@ -27,9 +28,9 @@ const SignupPage = () => {
     localStorage.setItem('pulsePointUser', JSON.stringify(formData));
     alert("Signup successful! Your data has been saved.");
   };
-
+  const Navigate = useNavigate();
   const goToLogin = () => {
-    window.location.href = 'login.html';
+      Navigate('/login');
   };
 
   return (
@@ -99,4 +100,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default Signup_page;

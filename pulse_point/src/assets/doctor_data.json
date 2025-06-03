@@ -1,5 +1,5 @@
 {
-  "Cardiologist": [
+  "Cardiology": [
     {
       "name": "Dr. Rajiv Malhotra",
       "img_src": "https://randomuser.me/api/portraits/men/10.jpg",
@@ -36,7 +36,7 @@
       "experience_years": 20
     }
   ],
-  "Neurologist": [
+  "Neurology": [
     {
       "name": "Dr. Neha Varma",
       "img_src": "https://randomuser.me/api/portraits/women/30.jpg",
@@ -73,7 +73,7 @@
       "experience_years": 9
     }
   ],
-  "Orthopedic": [
+  "Orthopedics": [
     {
       "name": "Dr. Sanjay Mehra",
       "img_src": "https://randomuser.me/api/portraits/men/30.jpg",
@@ -147,7 +147,7 @@
       "experience_years": 7
     }
   ],
-  "Dermatologist": [
+  "Dermatology": [
     {
       "name": "Dr. Alok Jain",
       "img_src": "https://randomuser.me/api/portraits/men/45.jpg",

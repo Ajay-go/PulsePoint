@@ -44,3 +44,7 @@
 #doctor_details button:hover {
   background-color: #a0d9d9;
 }
+#doctor_details:hover{
+  background-color: #bae8e8;
+  transition-duration: 0.2s;
+}
