@@ -13,7 +13,7 @@ const Signup_page = () => {
   });
 
   const handleChange = (e) => {
-    const { id, value, name, type, checked } = e.target;
+    const { id, value, name, type } = e.target;
     const key = type === 'radio' ? name : id;
     const val = type === 'radio' ? value : value;
 

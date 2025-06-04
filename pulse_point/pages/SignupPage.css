@@ -1,6 +1,6 @@
 /* Header */
 header {
-  background-color: #f05f70;
+  background-color: #FAF1E6;
   text-align: center;
   padding: 15px 0;
   color: white;
@@ -38,6 +38,7 @@ main {
 }
 
 .signup-left {
+  
   flex: 1;
   padding: 30px;
   background-color: white;
@@ -53,10 +54,14 @@ main {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-right: 25px;
 }
 
 .signup-left label {
-  font-weight: 500;
+  padding-left: 0px;
+  margin-left: 0px;
+
+  font-weight: bold;
   margin-bottom: 5px;
   color: #444;
 }
@@ -128,7 +133,7 @@ main {
 
 .signup-right button {
   background-color: white;
-  color: #f05f70;
+  color: #000000;
   border: none;
   padding: 12px 24px;
   border-radius: 20px;
@@ -138,7 +143,7 @@ main {
 }
 
 .signup-right button:hover {
-  background-color: #fcd4d8;
+  background-color: #ADB2D5;
 }
 
 /* Footer */
