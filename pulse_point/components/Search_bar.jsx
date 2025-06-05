@@ -18,6 +18,10 @@ function Searchbar() {
     navigate("/Signup");
   }
 
+  function handle_profile_click() {
+    navigate("/profile")
+  }
+
   function handle_search_click() {
     console.log(search_input)
   }
@@ -63,6 +67,10 @@ function Searchbar() {
 
         <div id="signup_button">
           <button onClick={handle_signup_click}>Signup</button>
+        </div>
+
+        <div id="profile_button">
+          <button onClick={handle_profile_click}>Profile</button>
         </div>
       </div>
     </div>
