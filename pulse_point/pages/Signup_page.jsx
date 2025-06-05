@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import './SignupPage.css';
 import { useNavigate } from 'react-router-dom';
+import { database } from '../src/firebase';
+import { ref, set, get, child } from 'firebase/database';
 
 const Signup_page = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullName: '',
     username: '',
@@ -15,7 +19,7 @@ const Signup_page = () => {
   const handleChange = (e) => {
     const { id, value, name, type } = e.target;
     const key = type === 'radio' ? name : id;
-    const val = type === 'radio' ? value : value;
+    const val = value;
 
     setFormData((prev) => ({
       ...prev,
@@ -23,20 +27,59 @@ const Signup_page = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.setItem('pulsePointUser', JSON.stringify(formData));
-    alert("Signup successful! Your data has been saved.");
+    const username = formData.username;
+    const dbRef = ref(database);
+
+    try {
+      const snapshot = await get(child(dbRef, `users/${username}`));
+      if (snapshot.exists()) {
+        alert("Username already taken. Please choose another.");
+        return;
+      }
+
+      await set(ref(database, `users/${username}`), formData);
+      console.log("Data successfully written to Firebase");
+
+      localStorage.setItem('pulsePointUser', JSON.stringify(formData));
+
+      alert("Signup successful! Redirecting to home...");
+      navigate('/');
+    } catch (error) {
+      console.error("Firebase Error:", error);
+      alert("Error saving data. Please try again.");
+    }
   };
-  const Navigate = useNavigate();
+
   const goToLogin = () => {
-      Navigate('/login');
+    navigate('/login');
+  };
+
+  const goHome = () => {
+    navigate('/');
   };
 
   return (
     <>
-      <header>
+      <header style={{ position: 'relative' }}>
         <h2>Pulse Point</h2>
+        <button
+          onClick={goHome}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '15px',
+            fontSize: '20px',
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            color: '#333'
+          }}
+          aria-label="Close"
+        >
+          ❌
+        </button>
       </header>
 
       <main className="signup-container">
@@ -87,8 +130,8 @@ const Signup_page = () => {
 
           <div className="signup-right">
             <h2>Welcome to login</h2>
-            <p>Don’t have an account?</p>
-            <button onClick={goToLogin}>Log In</button>
+            <p>Already have an account?</p>
+            <button >Log In</button>
           </div>
         </section>
       </main>
