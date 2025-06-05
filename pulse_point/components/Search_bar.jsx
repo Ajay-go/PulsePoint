@@ -10,7 +10,11 @@ function Searchbar() {
 
   const [search_input,set_search_input] = useState("");
 
-  function handle_click() {
+  function handle_login_click() {
+    navigate('/login')
+  }
+
+  function handle_signup_click() {
     navigate("/Signup");
   }
 
@@ -52,9 +56,13 @@ function Searchbar() {
             <FaSearch className="search-icon" />
           </button>
         </div>
+        
+        <div id="login_button">
+          <button onClick={handle_login_click}>Login</button>
+        </div>
 
         <div id="signup_button">
-          <button onClick={handle_click}>Signup</button>
+          <button onClick={handle_signup_click}>Signup</button>
         </div>
       </div>
     </div>

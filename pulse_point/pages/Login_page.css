@@ -1,0 +1,54 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.login-box {
+  display: flex;
+  border: 1px solid #ccc;
+  width: 800px;
+  height: 500px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.login-left, .login-right {
+  flex: 1;
+  padding: 2rem;
+}
+
+.login-left {
+  background-color: #fff;
+}
+
+.login-right {
+  background-color: #f0f0f0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-left h2, .login-right h2 {
+  margin-bottom: 1rem;
+}
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0 1rem;
+}
+
+input[type="submit"], .login-right button {
+  padding: 0.6rem 1.5rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+input[type="submit"]:hover, .login-right button:hover {
+  background-color: #45a049;
+}
