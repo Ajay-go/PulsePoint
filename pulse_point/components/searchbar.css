@@ -62,7 +62,7 @@
   font-size: 15px;
   padding-left: 10px;
   border: none;
-  margin-left: 30px;
+  margin-left: 50px;
   margin-right: -30px;
   box-shadow: 1px 1px 3px black;
   background-image: url("../src/assets/bg7.jpg");
@@ -89,7 +89,7 @@
   border-radius: 20px;
   background-color: #c4c4c4;
   cursor: pointer;
-  margin-left: 0;
+  margin-left: 0px;
 }
 
 #search_button:hover {

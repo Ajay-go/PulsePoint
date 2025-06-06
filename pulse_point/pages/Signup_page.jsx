@@ -35,20 +35,34 @@ const Signup_page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const username = formData.username;
+    const { username, email } = formData;
     const dbRef = ref(database);
 
     try {
-      const snapshot = await get(child(dbRef, `users/${username}`));
-      if (snapshot.exists()) {
+      // Check if username already exists
+      const usernameSnapshot = await get(child(dbRef, `users/${username}`));
+      if (usernameSnapshot.exists()) {
         alert("Username already taken. Please choose another.");
         return;
       }
 
+      // Check if email is already used
+      const allUsersSnapshot = await get(child(dbRef, 'users'));
+      if (allUsersSnapshot.exists()) {
+        const users = allUsersSnapshot.val();
+        const emailExists = Object.values(users).some(user => user.email === email);
+        if (emailExists) {
+          alert("Email already in use. Please use a different email.");
+          return;
+        }
+      }
+
+      // Save user
       await set(ref(database, `users/${username}`), formData);
       console.log("Data successfully written to Firebase");
 
       localStorage.setItem('pulsePointUser', JSON.stringify(formData));
+      window.dispatchEvent(new Event("userLoginStatusChanged")); // optional: notify UI
 
       alert("Signup successful! Redirecting to home...");
       navigate('/');
@@ -57,6 +71,7 @@ const Signup_page = () => {
       alert("Error saving data. Please try again.");
     }
   };
+
 
   const goHome = () => {
     navigate('/');
