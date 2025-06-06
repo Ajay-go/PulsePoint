@@ -4,8 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { database } from '../src/firebase';
 import { ref, set, get, child } from 'firebase/database';
 
+
 const Signup_page = () => {
   const navigate = useNavigate();
+
+  function handle_login_click() {
+    navigate('/login')
+  }
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -50,10 +55,6 @@ const Signup_page = () => {
       console.error("Firebase Error:", error);
       alert("Error saving data. Please try again.");
     }
-  };
-
-  const goToLogin = () => {
-    navigate('/login');
   };
 
   const goHome = () => {
@@ -131,7 +132,7 @@ const Signup_page = () => {
           <div className="signup-right">
             <h2>Welcome to login</h2>
             <p>Already have an account?</p>
-            <button >Log In</button>
+            <button onClick={handle_login_click}>Log In</button>
           </div>
         </section>
       </main>
