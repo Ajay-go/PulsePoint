@@ -4,11 +4,12 @@ import { useNavigate, NavLink } from "react-router-dom";
 import logo from "../src/assets/logo.png";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
+import { useEffect } from "react";
 
 function Searchbar() {
   const navigate = useNavigate();
-
   const [search_input, set_search_input] = useState("");
+  const isLoggedIn = localStorage.getItem("pulsePointUser") !== null;
 
   function handle_login_click() {
     navigate("/login");
@@ -25,6 +26,7 @@ function Searchbar() {
   function handle_search_click() {
     console.log(search_input);
   }
+
   function handleKeyDown(e) {
     if (e.key === "Enter") {
       const value = e.target.value;
@@ -67,17 +69,20 @@ function Searchbar() {
         </div>
 
         <div id="user_oper">
-          <div id="login_button">
-            <button onClick={handle_login_click}>Login</button>
-          </div>
-
-          <div id="signup_button">
-            <button onClick={handle_signup_click}>Signup</button>
-          </div>
-
-          <div id="profile_button">
-            <button onClick={handle_profile_click}>Profile</button>
-          </div>
+          {!isLoggedIn ? (
+            <>
+              <div id="login_button">
+                <button onClick={handle_login_click}>Login</button>
+              </div>
+              <div id="signup_button">
+                <button onClick={handle_signup_click}>Signup</button>
+              </div>
+            </>
+          ) : (
+            <div id="profile_button">
+              <button onClick={handle_profile_click}>Profile</button>
+            </div>
+          )}
         </div>
       </div>
     </div>
