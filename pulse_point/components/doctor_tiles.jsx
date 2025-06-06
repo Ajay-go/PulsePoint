@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 function Doc_tile(props) {
   const navigate = useNavigate();
-
+  const isLoggedIn = localStorage.getItem("pulsePointUser") !== null;
   function handle_book() {
     const formattedName = props.name.toLowerCase().replace(/\s+/g, "-");
-    navigate(`/book_appointment/${props.speciality}/${formattedName}`);
+    if(isLoggedIn)navigate(`/book_appointment/${props.speciality}/${formattedName}`);
+    else alert("please signup or login")
   }
 
   return (
@@ -15,7 +16,7 @@ function Doc_tile(props) {
       <img src={props.img_url} />
       <h2>Name : {props.name}</h2>
       <h2>Speciality : {props.speciality}</h2>
-      <h2>Expirience : {props.expirience}</h2>
+      <h2>Experience : {props.expirience} years</h2>
       <button onClick={handle_book}>Book Appointment</button>
     </div>
   );

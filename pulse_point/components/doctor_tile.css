@@ -26,8 +26,11 @@
 }
 
 #doctor_details h2 {
+  color: #385170;
+  font-size: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 5px 0;
-  text-align: left;
+  text-align:justify;
 }
 
 #doctor_details button {
