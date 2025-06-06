@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Profile_page.css';
 import { useNavigate } from 'react-router-dom';
-
+import { ImCross } from "react-icons/im";
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const ProfilePage = () => {
           }}
           aria-label="Close"
         >
-          ❌
+        <ImCross/>
         </button>
       </header>
 

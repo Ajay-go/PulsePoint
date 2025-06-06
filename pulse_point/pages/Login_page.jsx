@@ -3,6 +3,7 @@ import './Login_page.css';
 import { useNavigate } from 'react-router-dom';
 import { database } from '../src/firebase';
 import { ref, get, child } from 'firebase/database';
+import { ImCross } from 'react-icons/im';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const LoginPage = () => {
           }}
           aria-label="Close"
         >
-          ❌
+          <ImCross/>
         </button>
       </header>
 

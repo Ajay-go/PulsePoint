@@ -8,10 +8,10 @@ import { useState } from "react";
 function Searchbar() {
   const navigate = useNavigate();
 
-  const [search_input,set_search_input] = useState("");
+  const [search_input, set_search_input] = useState("");
 
   function handle_login_click() {
-    navigate('/login')
+    navigate("/login");
   }
 
   function handle_signup_click() {
@@ -19,21 +19,20 @@ function Searchbar() {
   }
 
   function handle_profile_click() {
-    navigate("/profile")
+    navigate("/profile");
   }
 
   function handle_search_click() {
-    console.log(search_input)
+    console.log(search_input);
   }
   function handleKeyDown(e) {
-  if (e.key === "Enter") {
-    const value = e.target.value;
-    if (value) {
-      console.log(value)
+    if (e.key === "Enter") {
+      const value = e.target.value;
+      if (value) {
+        console.log(value);
+      }
     }
   }
-}
-
 
   return (
     <div id="header">
@@ -43,34 +42,42 @@ function Searchbar() {
         </div>
 
         <div id="brand_name">
-          <h1><NavLink to="/" className="link">PulsePoint</NavLink></h1>
+          <h1>
+            <NavLink to="/" className="link">
+              PulsePoint
+            </NavLink>
+          </h1>
           <h3>CURE YOURSELF :)</h3>
         </div>
       </div>
 
       <div id="input_field">
         <div id="searchbar">
-          <input type="text" placeholder="Search Doctor "
-           onChange={(e)=>set_search_input(e.target.value)} 
-           value = {search_input} 
-           onKeyDown={handleKeyDown}
-           />
-  
+          <input
+            type="text"
+            placeholder="Search Doctor "
+            onChange={(e) => set_search_input(e.target.value)}
+            value={search_input}
+            onKeyDown={handleKeyDown}
+          />
+
           <button id="search_button" onClick={handle_search_click}>
             <FaSearch className="search-icon" />
           </button>
         </div>
-        
-        <div id="login_button">
-          <button onClick={handle_login_click}>Login</button>
-        </div>
 
-        <div id="signup_button">
-          <button onClick={handle_signup_click}>Signup</button>
-        </div>
+        <div id="user_oper">
+          <div id="login_button">
+            <button onClick={handle_login_click}>Login</button>
+          </div>
 
-        <div id="profile_button">
-          <button onClick={handle_profile_click}>Profile</button>
+          <div id="signup_button">
+            <button onClick={handle_signup_click}>Signup</button>
+          </div>
+
+          <div id="profile_button">
+            <button onClick={handle_profile_click}>Profile</button>
+          </div>
         </div>
       </div>
     </div>

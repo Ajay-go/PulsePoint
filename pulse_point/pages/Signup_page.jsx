@@ -3,6 +3,7 @@ import './SignupPage.css';
 import { useNavigate } from 'react-router-dom';
 import { database } from '../src/firebase';
 import { ref, set, get, child } from 'firebase/database';
+import { ImCross } from 'react-icons/im';
 
 
 const Signup_page = () => {
@@ -79,7 +80,8 @@ const Signup_page = () => {
           }}
           aria-label="Close"
         >
-          ❌
+          <ImCross/>
+
         </button>
       </header>
 
