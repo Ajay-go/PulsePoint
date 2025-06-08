@@ -105,42 +105,28 @@ const Signup_page = () => {
           <div className="signup-left">
             <h2>Sign Up</h2>
             <form onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="fullName">Full Name:</label>
+              <div id='user_data'>
+                <label htmlFor="fullName">Full Name</label>
                 <input type="text" id="fullName" placeholder="Enter your name" required onChange={handleChange} />
               </div>
-              <div>
-                <label htmlFor="username">Username:</label>
+              <div id='user_data'>
+                <label htmlFor="username">Username</label>
                 <input type="text" id="username" placeholder="Choose a username" required onChange={handleChange} />
               </div>
-              <div>
-                <label htmlFor="email">Email:</label>
+              <div id='user_data'>
+                <label htmlFor="email">Email</label>
                 <input type="email" id="email" placeholder="Enter your email" required onChange={handleChange} />
               </div>
-              <div>
-                <label htmlFor="password">Password:</label>
+              <div id='user_data'>
+                <label htmlFor="password">Password</label>
                 <input type="password" id="password" placeholder="Create a password" required onChange={handleChange} />
               </div>
-              <div>
-                <label htmlFor="phone">Phone Number:</label>
+              <div id='user_data'>
+                <label htmlFor="phone">Phone Number</label>
                 <input type="tel" id="phone" placeholder="Enter your phone number" required onChange={handleChange} />
               </div>
-              <fieldset>
-                <legend>Select your gender</legend>
-                <div className="gender-option">
-                  <label htmlFor="user-gender-male">Male</label>
-                  <input type="radio" name="gender" id="user-gender-male" value="male" onChange={handleChange} />
-                </div>
-                <div className="gender-option">
-                  <label htmlFor="user-gender-female">Female</label>
-                  <input type="radio" name="gender" id="user-gender-female" value="female" onChange={handleChange} />
-                </div>
-                <div className="gender-option">
-                  <label htmlFor="user-gender-others">Others</label>
-                  <input type="radio" name="gender" id="user-gender-others" value="others" onChange={handleChange} />
-                </div>
-              </fieldset>
-              <div>
+              
+              <div id='submit_form'>
                 <input type="submit" value="Sign Up" />
               </div>
             </form>

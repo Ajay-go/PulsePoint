@@ -106,6 +106,7 @@ main {
 }
 
 .signup-left input[type="submit"]:hover {
+  margin-left: 0px;
   background-color: #d64b5c;
 }
 
@@ -159,4 +160,14 @@ footer {
   margin-right: auto;
   border-radius: 8px;
   margin-bottom: 40px;
+}
+label{
+  width: 100%;
+  margin-left:4% ;
+}
+#user_data{
+  text-align: left;
+}
+#submit_form{
+  margin-left: 5%;
 }

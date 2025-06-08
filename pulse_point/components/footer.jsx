@@ -9,6 +9,7 @@ const Footer = () => {
         <p>
           Hi, we're Ajay Gour and Krishna Mudgal — passionate developers dedicated to building smart, user-friendly healthcare solutions. This project combines our expertise to create meaningful digital experiences.
         </p>
+        <button>Login as doctor</button>
       </div>
 
       <div className="footer-section">
@@ -36,6 +37,7 @@ const Footer = () => {
             </a>
           </li>
         </ul>
+
       </div>
     </footer>
   );

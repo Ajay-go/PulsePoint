@@ -80,8 +80,8 @@ const LoginPage = () => {
           <div className="login-left">
             <h2>Log In</h2>
             <form onSubmit={handleLogin}>
-              <div>
-                <label htmlFor="userInput">Username or Email:</label>
+              <div id='login_data'>
+                <label htmlFor="userInput">Username or Email</label>
                 <input
                   type="text"
                   id="userInput"
@@ -90,8 +90,8 @@ const LoginPage = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div>
-                <label htmlFor="password">Password:</label>
+              <div id='login_data'>
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   id="password"

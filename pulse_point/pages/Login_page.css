@@ -55,3 +55,10 @@ input[type="submit"], .login-right button {
 input[type="submit"]:hover, .login-right button:hover {
   background-color: #45a049;
 }
+#login_data{
+  text-align: left;
+}
+label{
+  font-weight:600;
+  margin-left: 0px;
+}
