@@ -12,6 +12,8 @@ import Login_page from '../pages/Login_page';
 import Profile_Page from "../pages/Profile_page";
 import Book from '../pages/Book_appointment'
 import SearchResultsPage from '../pages/Search_result'
+import Doc_login from '../pages/doctor_login'
+import Chat from '../pages/chat_with_ai'
 // Create simple page components for demonstration
 
 
@@ -28,6 +30,8 @@ function App() {
         <Route path="/profile" element={<Profile_Page />} />
         <Route path="/book_appointment/:field/:fullname" element={<Book />} />
         <Route path="/search-results" element={<SearchResultsPage />} />
+        <Route path="/doctor/signup" element={<Doc_login />} />
+         <Route path="/chat" element={<Chat />} />
       
       </Routes>
     </Router>

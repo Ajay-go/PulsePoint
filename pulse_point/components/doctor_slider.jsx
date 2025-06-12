@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { firestore } from "../src/firebase"; // adjust this path if needed
-import Doc_tile from "./doctor_tiles"; // your custom tile component
-import "./tile_slider.css"; // styles for slider layout
+import { firestore } from "../src/firebase"; // Adjust if needed
+import Doc_tile from "./doctor_tiles";
+import "./tile_slider.css";
 
 function Slider() {
   const [doctorData, setDoctorData] = useState([]);
@@ -10,17 +10,12 @@ function Slider() {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const querySnapshot = await getDocs(collection(firestore, "doctors"));
+        const querySnapshot = await getDocs(collection(firestore, "pulse_point")); // updated collection name
         const allDoctors = [];
 
-        // Go through each document (you currently only have one: "2")
         querySnapshot.forEach((doc) => {
-          const data = doc.data(); // This is an object: { "1": {...}, "2": {...}, ..., "31": {...} }
-
-          // Flatten nested doctor objects inside the document
-          Object.keys(data).forEach((key) => {
-            allDoctors.push(data[key]);
-          });
+          const data = doc.data();
+          allDoctors.push(data);
         });
 
         setDoctorData(allDoctors);
@@ -43,11 +38,11 @@ function Slider() {
               key={index}
               img_url={doc.img_src}
               name={doc.name}
-              expirience={doc.Experience}
-              location={doc.location}
-              speciality={doc.Speciality}
-              fees={doc.Fees}
-              education={doc.Education}
+              expirience={doc.experience_years}
+              speciality={doc.speciality}
+              education={doc.education}
+              location = {doc.Location}
+              
             />
           ))}
         </div>
