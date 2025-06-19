@@ -6,7 +6,7 @@ const Footer = () => {
   const navigate = useNavigate();
 
   function handle_doc_login() {
-    navigate('/doctor/signup');
+    navigate('/doctor-signup');
   }
 
   return (

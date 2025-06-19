@@ -1,97 +1,119 @@
 import React, { useState } from "react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import './doctor_login.css'
+import { useNavigate } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
 import { firestore } from "../src/firebase";
+import { ImCross } from "react-icons/im";
 
 function Doc_login() {
-  const [formData, setFormData] = useState({
-    name: "",
-    Education: "",
-    Experience: "",
-    Fees: "",
-    Speciality: "",
-    location: ""
+  const navigate = useNavigate();
+
+  function handleSignupClick() {
+    navigate("/doctor-signup");
+  };
+
+  function goHome() {
+    navigate("/");
+  };
+
+  const [credentials, setCredentials] = useState({
+    usernameOrEmail: "",
+    password: "",
   });
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
+    const { id, value } = e.target;
+    setCredentials((prev) => ({
       ...prev,
-      [e.target.id]: e.target.value
+      [id]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const docRef = doc(firestore, "doctors", "2");
-      const docSnap = await getDoc(docRef);
-
-      let existingDoctors = {};
-      if (docSnap.exists()) {
-        existingDoctors = docSnap.data();
-      }
-
-      // Get next numeric key
-      const nextId =
-        Math.max(...Object.keys(existingDoctors).map(Number), 0) + 1;
-
-      const updatedDoctors = {
-        ...existingDoctors,
-        [nextId]: formData
-      };
-
-      await setDoc(docRef, updatedDoctors);
-      alert("Doctor added successfully!");
-
-      setFormData({
-        name: "",
-        Education: "",
-        Experience: "",
-        Fees: "",
-        Speciality: "",
-        location: ""
+      const doctorsSnapshot = await getDocs(collection(firestore, "doctors"));
+      const foundDoc = doctorsSnapshot.docs.find((doc) => {
+        const data = doc.data();
+        return (
+          (data.username?.toLowerCase() === credentials.usernameOrEmail.toLowerCase() ||
+            data.email?.toLowerCase() === credentials.usernameOrEmail.toLowerCase()) &&
+          data.password === credentials.password
+        );
       });
+
+      if (foundDoc) {
+        localStorage.setItem("pulsePointDoctor", JSON.stringify(foundDoc.data()));
+        alert("Login successful!");
+        navigate("/doctor-home");
+      } else {
+        alert("Invalid username/email or password.");
+      }
     } catch (error) {
-      console.error("Error saving doctor:", error);
+      console.error("Login error:", error);
+      alert("An error occurred. Try again.");
     }
   };
 
   return (
-    <div id="doctor_form">
-      <main className="signup-container">
-        <section className="signup-box">
-          <div className="signup-left">
-            <h2>Sign Up as Doctor</h2>
-            <form onSubmit={handleSubmit}>
-              {[
-                { id: "name", label: "Full Name", type: "text" },
-                { id: "Education", label: "Education", type: "text" },
-                { id: "Experience", label: "Experience (years)", type: "number" },
-                { id: "Fees", label: "Fees", type: "number" },
-                { id: "Speciality", label: "Speciality", type: "text" },
-                { id: "location", label: "Location", type: "text" }
-              ].map(({ id, label, type }) => (
-                <div key={id} id="user_data">
-                  <label htmlFor={id}>{label}</label>
-                  <input
-                    type={type}
-                    id={id}
-                    value={formData[id]}
-                    onChange={handleChange}
-                    placeholder={`Enter ${label}`}
-                    required
-                  />
-                </div>
-              ))}
+    <div id="doctor_login_page">
+      <header style={{ position: "relative" }}>
+        <h2>Pulse Point</h2>
+        <button
+          onClick={goHome}
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "15px",
+            fontSize: "20px",
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
+            color: "#333",
+          }}
+          aria-label="Close"
+        >
+          <ImCross />
+        </button>
+      </header>
 
-              <div id="submit_form">
-                <input type="submit" value="Sign Up" />
+      <main className="login-container">
+        <section className="login-box">
+          <div className="login-left">
+            <h2>Doctor Login</h2>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="usernameOrEmail">Username or Email:</label>
+                <input
+                  type="text"
+                  id="usernameOrEmail"
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="password">Password:</label>
+                <input
+                  type="password"
+                  id="password"
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <input type="submit" value="Log In" />
               </div>
             </form>
+          </div>
+          <div className="login-right">
+            <h2>Welcome Doctor!</h2>
+            <p>Don’t have an account?</p>
+            <button onClick={handleSignupClick}>Sign Up</button>
           </div>
         </section>
       </main>
 
-      <footer>
+      <footer className="footer">
         <p>&copy; 2025 Pulse Point</p>
       </footer>
     </div>
