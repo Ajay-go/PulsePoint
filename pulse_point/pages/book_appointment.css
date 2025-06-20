@@ -1,0 +1,14 @@
+#appointment_slots{
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+}
+#book_page{
+   width: 700px;
+}
+#book_main{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}

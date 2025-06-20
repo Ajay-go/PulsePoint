@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { firestore } from "../src/firebase"; // adjust path if needed
+import Appointments_customer_view from "./appointment_customer_view";
+import './book_appointment.css'
 
 function Book() {
   const { fullname, field } = useParams();
@@ -42,14 +44,28 @@ function Book() {
   if (!doctor) return <p>Doctor not found</p>;
 
   return (
-    <div>
+    <>
+    <div id="book_main">
+      <div id="book_page">
       <img src={doctor.img_src} alt={doctor.name} />
       <p>Name: {doctor.name}</p>
       <p>Speciality: {doctor.speciality}</p>
       <p>Experience: {doctor.experience_years} years</p>
       <p>Education: {doctor.education}</p>
-      <button>Book appointment for ₹500</button>
+      <div id="appointment_slots">
+        <Appointments_customer_view time = {'10-am'} name = {doctor.name}/>
+        <Appointments_customer_view time = {'11-am'} name = {doctor.name}/>
+        <Appointments_customer_view time = {'12-pm'} name = {doctor.name}/>
+        <Appointments_customer_view time = {'14-pm'} name = {doctor.name}/>
+        <Appointments_customer_view time = {'15-pm'} name = {doctor.name}/>
+        <Appointments_customer_view time = {'16-pm'} name = {doctor.name}/>
+        <Appointments_customer_view time = {'17-pm'} name = {doctor.name}/>
+        <Appointments_customer_view time = {'18-pm'} name = {doctor.name}/>
+
+      </div>
     </div>
+    </div>
+    </>
   );
 }
 

@@ -8,7 +8,7 @@ const Footer = () => {
   function handle_doc_login() {
     navigate('/doctor-signup');
   }
-
+  const isLoggedIn = localStorage.getItem("pulsePointUser") !== null;
   return (
     <footer className="footer">
       <div className="footer-section">
@@ -16,7 +16,9 @@ const Footer = () => {
         <p>
           Hi, we're Ajay Gour and Krishna Mudgal — passionate developers dedicated to building smart, user-friendly healthcare solutions. This project combines our expertise to create meaningful digital experiences.
         </p>
+         {!isLoggedIn && (
         <button onClick={handle_doc_login}>Login as doctor</button>
+      )}
       </div>
 
       <div className="footer-section">
