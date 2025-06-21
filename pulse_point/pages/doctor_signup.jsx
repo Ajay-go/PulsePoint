@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './doctor_signup.css';
 import { collection, getDocs, doc, setDoc } from "firebase/firestore";
-import { firestore } from "../src/firebase";
+import { firestore, auth } from "../src/firebase";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { ImCross } from "react-icons/im";
 
 function Doc_signup() {
@@ -35,17 +36,18 @@ function Doc_signup() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { email, username, password } = formData;
 
     try {
+      // Check for duplicates
       const doctorsSnapshot = await getDocs(collection(firestore, "doctors"));
-
       const duplicate = doctorsSnapshot.docs.find((doc) => {
         const data = doc.data();
         return (
-          data.username?.toLowerCase().trim() === formData.username.toLowerCase().trim() ||
-          data.email?.toLowerCase().trim() === formData.email.toLowerCase().trim()
+          data.username?.toLowerCase().trim() === username.toLowerCase().trim() ||
+          data.email?.toLowerCase().trim() === email.toLowerCase().trim()
         );
       });
 
@@ -54,18 +56,40 @@ function Doc_signup() {
         return;
       }
 
-      const doctorRef = doc(firestore, "doctors", formData.username);
-      await setDoc(doctorRef, formData);
+      // Create user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-      localStorage.setItem("pulsePointDoctor", JSON.stringify(formData));
-      alert("Doctor signed up successfully!");
-      navigate("/doctor-home");
+      // Send email verification
+      await sendEmailVerification(user);
+      alert("A verification email has been sent to your email. Please verify it before continuing.");
+
+      // Wait for user to manually verify and click OK
+      const proceed = window.confirm("Click OK after verifying your email. You won't be signed up until verification is done.");
+
+      // Reload and re-check verification status
+      await user.reload();
+      if (auth.currentUser.emailVerified) {
+        // Save doctor in Firestore
+        const doctorRef = doc(firestore, "doctors", username);
+        await setDoc(doctorRef, formData);
+
+        localStorage.setItem("pulsePointDoctor", JSON.stringify(formData));
+        alert("Email verified and signup successful!");
+        navigate("/doctor-home");
+      } else {
+        await user.delete();  // cleanup
+        alert("Email not verified. Signup canceled. Redirecting to home.");
+        navigate('/');
+      }
 
     } catch (error) {
-      console.error("Error signing up doctor:", error);
-      alert("Something went wrong. Try again.");
+      console.error("Doctor Signup Error:", error.message);
+      alert("Signup failed: " + error.message);
     }
   };
+
+
 
   return (
     <div id="doctor_form">

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './SignupPage.css';
 import { useNavigate } from 'react-router-dom';
-import { database } from '../src/firebase';
+import { database, auth } from '../src/firebase';
 import { ref, set, get, child } from 'firebase/database';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { ImCross } from 'react-icons/im';
 
 
@@ -35,18 +36,18 @@ const Signup_page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { username, email } = formData;
+    const { username, email, password } = formData;
     const dbRef = ref(database);
 
     try {
-      // Check if username already exists
+      // Check username uniqueness
       const usernameSnapshot = await get(child(dbRef, `users/${username}`));
       if (usernameSnapshot.exists()) {
         alert("Username already taken. Please choose another.");
         return;
       }
 
-      // Check if email is already used
+      // Check email uniqueness
       const allUsersSnapshot = await get(child(dbRef, 'users'));
       if (allUsersSnapshot.exists()) {
         const users = allUsersSnapshot.val();
@@ -57,20 +58,36 @@ const Signup_page = () => {
         }
       }
 
-      // Save user
-      await set(ref(database, `users/${username}`), formData);
-      console.log("Data successfully written to Firebase");
+      // Create user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-      localStorage.setItem('pulsePointUser', JSON.stringify(formData));
-      window.dispatchEvent(new Event("userLoginStatusChanged")); // optional: notify UI
+      // Send verification email
+      await sendEmailVerification(user);
+      alert("A verification email has been sent. Please verify your email first and then click on OK.");
 
-      alert("Signup successful! Redirecting to home...");
+      // Reload user to update verification status
+      await user.reload();
+
+      if (user.emailVerified) {
+        // Store user data if verified
+        await set(ref(database, `users/${username}`), formData);
+        localStorage.setItem('pulsePointUser', JSON.stringify(formData));
+        alert("Email verified and signup successful!");
+      } else {
+        // Email not verified → delete user from Auth
+        await user.delete();
+        alert("Email not verified. Signup canceled. Redirecting to home.");
+      }
+
       navigate('/');
     } catch (error) {
-      console.error("Firebase Error:", error);
-      alert("Error saving data. Please try again.");
+      console.error("Signup Error:", error.message);
+      alert("Signup failed: " + error.message);
     }
   };
+
+
 
 
   const goHome = () => {
