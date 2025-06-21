@@ -44,30 +44,33 @@ function Appointments_customer_view(props) {
   }
 
   return (
-    <div id="appointment_div">
-      {slotStatus !== null ? (
-        <button
-          onClick={handle_book}
-          style={{
-            backgroundColor: slotStatus ? "#AEEA94" : "#FF8383",
-            color: "black",
-            padding: "10px 20px",
-            border: "none",
-            borderRadius: "6px",
-            fontWeight: "bold",
-            cursor: "pointer",
-            margin: "8px",
-            boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-          }}
-        >
-          {slotStatus
-            ? `Book for ₹500  ${props.time}`
-            : `Unavailable at ${props.time}`}
-        </button>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
+    <>
+      
+      <div id="appointment_div">
+        {slotStatus !== null ? (
+          <button
+            onClick={handle_book}
+            style={{
+              backgroundColor: slotStatus ? "#AEEA94" : "#FF8383",
+              color: "black",
+              padding: "10px 20px",
+              border: "none",
+              borderRadius: "6px",
+              fontWeight: "bold",
+              cursor: "pointer",
+              margin: "8px",
+              boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+            }}
+          >
+            {slotStatus
+              ? `Book for ₹500  ${props.time}`
+              : `Booked at ${props.time}`}
+          </button>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+    </>
   );
 }
 

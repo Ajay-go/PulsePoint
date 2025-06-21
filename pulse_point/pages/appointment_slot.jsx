@@ -53,6 +53,7 @@ function Appointments(props) {
 
   return (
     <div id="appointment_div">
+      
       {slotStatus !== null ? (
         <button
   onClick={change_status}
