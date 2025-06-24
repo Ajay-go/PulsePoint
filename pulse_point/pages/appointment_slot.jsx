@@ -9,7 +9,6 @@ function Appointments(props) {
   const navigate = useNavigate();
   const db = getFirestore();
 
-  // Fetch doctor info from localStorage
   useEffect(() => {
     const stored = localStorage.getItem("pulsePointDoctor");
     if (stored) {
@@ -21,7 +20,6 @@ function Appointments(props) {
     }
   }, []);
 
-  // Fetch current slot status from Firestore
   async function fetchSlotStatus(doctorName) {
     const docId = doctorName.replace(/\s+/g, "_").replace(/\./g, "");
     const docRef = doc(db, "appointments", docId);
@@ -35,43 +33,59 @@ function Appointments(props) {
     }
   }
 
-
   async function change_status() {
     if (!doctor) return;
+
     const docId = doctor.name.replace(/\s+/g, "_").replace(/\./g, "");
     const docRef = doc(db, "appointments", docId);
 
+    const isAvailable =
+      typeof slotStatus === "string"
+        ? slotStatus.toLowerCase() === "available"
+        : slotStatus === true; // fallback for old boolean
+
+    const newStatus = isAvailable ? "Unavailable" : "Available";
+
     try {
       await updateDoc(docRef, {
-        [props.time]: !slotStatus
+        [props.time]: newStatus,
       });
-      setSlotStatus(!slotStatus);
+      setSlotStatus(newStatus);
     } catch (error) {
-      console.error(" Failed to update slot:", error);
+      console.error("❌ Failed to update slot:", error);
     }
   }
 
   return (
     <div id="appointment_div">
-      
       {slotStatus !== null ? (
         <button
-  onClick={change_status}
-  style={{
-    backgroundColor: slotStatus ? "#AEEA94" : "#FF8383", 
-    color: "black",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "6px",
-    fontWeight: "bold",
-    cursor: "pointer",
-    margin: "8px",
-    boxShadow: "0 4px 8px rgba(0,0,0,0.1)"
-  }}
->
-  {props.time} - Status: {slotStatus ? "Available ✅" : "Unavailable ❌"}
-</button>
-
+          onClick={change_status}
+          style={{
+            backgroundColor:
+              (typeof slotStatus === "string" &&
+                slotStatus.toLowerCase() === "available") ||
+              slotStatus === true
+                ? "#AEEA94"
+                : "#FF8383",
+            color: "black",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "6px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            margin: "8px",
+            boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+          }}
+        >
+          {props.time} - Status:{" "}
+          {(typeof slotStatus === "string" &&
+            slotStatus.toLowerCase() === "available")
+            ? "Available"
+            : (slotStatus === "Unavailable")
+            ? 'Unavailable'
+            : `Booked`}
+        </button>
       ) : (
         <p>Loading...</p>
       )}

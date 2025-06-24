@@ -1,20 +1,18 @@
 import React from "react";
-import './customer_tile.css'
+import './customer_tile.css';
 
-function Customer_Tile(props){
-   return <>
-      <div id="customer_details">
-        
-        <div id="left">
-         <img src={props.img_url} />
-        <h2>Name : {props.name}</h2>
-        </div>
-
-        <div id="right">
-         <p>{props.review}</p>
-
-        </div>
+function Customer_Tile({ img_url, name, review }) {
+  return (
+    <div className="review-tile">
+      <div className="cust-left">
+        <img src={img_url} alt={name} />
+        <h3>{name}</h3>
       </div>
-   </>
+      <div className="cust-right">
+        <p>{review}</p>
+      </div>
+    </div>
+  );
 }
-export default Customer_Tile
+
+export default Customer_Tile;

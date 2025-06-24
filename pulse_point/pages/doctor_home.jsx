@@ -1,30 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Appointments from "./appointment_slot";
 import "./doctor_home.css";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { firestore } from "../src/firebase.js";
 
 function Doc_home() {
+  const now = new Date();
+  const [today, setday] = useState(now.getMinutes())
   const [doctor, setDoctor] = useState(null);
+  const [bookedSlots, setBookedSlots] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
     const stored = localStorage.getItem("pulsePointDoctor");
     if (stored) {
-      setDoctor(JSON.parse(stored));
+      const docObj = JSON.parse(stored);
+      setDoctor(docObj);
+      fetchBookedSlots(docObj.name);
     } else {
       navigate("/doctor-login");
     }
-  }, [navigate]);
+  }, []);
+
+  const fetchBookedSlots = async (name) => {
+    const docId = name.replace(/\s+/g, "_").replace(/\./g, "");
+    const docRef = doc(firestore, "appointments", docId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const slots = docSnap.data();
+      const booked = {};
+      for (const time in slots) {
+        const val = slots[time];
+        if (
+          typeof val === "string" &&
+          val.toLowerCase() !== "available" &&
+          val.toLowerCase() !== "unavailable"
+        ) {
+          booked[time] = val; // patient name
+        }
+      }
+      setBookedSlots(booked);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("pulsePointDoctor");
     navigate("/");
   };
 
-  // Reusable function to set all slots to true or false
-  async function toggleAllSlots(status) {
+  
+
+
+  const toggleAllSlots = async (status) => {
     if (!doctor) return;
 
     const updatedSlots = {
@@ -44,41 +72,70 @@ function Doc_home() {
     try {
       await updateDoc(docRef, updatedSlots);
       window.location.reload();
-      console.log(`All slots updated to ${status}`);
     } catch (error) {
       console.error("Failed to update slots:", error);
     }
-  }
+  };
+
+  const convertTimeTo24Hr = (timeStr) => {
+    const [hour, period] = timeStr.split("-");
+    let hourNum = parseInt(hour, 10);
+    if (period === "pm" && hourNum !== 12) hourNum += 12;
+    if (period === "am" && hourNum === 12) hourNum = 0;
+    return hourNum;
+  };
 
   return doctor ? (
     <div id="doc_page">
       <div id="doctor_home">
-        <h2>Welcome Dr. {doctor.name}!</h2>
-        <p>
-          "Every patient you treat is a life you touch — your work truly
-          matters."
+        <h2>Welcome {doctor.name}!</h2>
+        <p className="doc-quote">
+          "Every patient you treat is a life you touch — your work truly matters."
         </p>
-        <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-          <div id="toggleall">
-            <button onClick={() => toggleAllSlots(false)}>
-              Set All Unavailable
-            </button>
-            <button onClick={() => toggleAllSlots(true)}>
-              Set All Available
-            </button>
-          </div>
+
+        <div id="toggleall">
+          <button onClick={() => toggleAllSlots("Unavailable")}>Set All Unavailable</button>
+          <button onClick={() => toggleAllSlots("Available")}>Set All Available</button>
         </div>
+
         <div id="appointment_slots">
-          <Appointments time={"10-am"} />
-          <Appointments time={"11-am"} />
-          <Appointments time={"12-pm"} />
-          <Appointments time={"14-pm"} />
-          <Appointments time={"15-pm"} />
-          <Appointments time={"16-pm"} />
-          <Appointments time={"17-pm"} />
-          <Appointments time={"18-pm"} />
+          <h3>Available & Unavailable Slots</h3>
+          <div className="slots-section">
+            <Appointments time="10-am" />
+            <Appointments time="11-am" />
+            <Appointments time="12-pm" />
+            <Appointments time="14-pm" />
+            <Appointments time="15-pm" />
+            <Appointments time="16-pm" />
+            <Appointments time="17-pm" />
+            <Appointments time="18-pm" />
+          </div>
+
+          {Object.keys(bookedSlots).length > 0 && (
+            <div className="appointments-card">
+              <h3>Your Appointments for Today</h3>
+              <div className="appointments-list">
+                {Object.entries(bookedSlots)
+                  .sort((a, b) => convertTimeTo24Hr(a[0]) - convertTimeTo24Hr(b[0]))
+                  .map(([time, patient]) => (
+                    <div className="appointment-item" key={time}>
+                      <p>
+                        <strong>Time:</strong> {time}
+                      </p>
+                      <p>
+                        <strong>Patient:</strong> {patient}
+                      </p>
+                      <p className="email-note">Check your email for details.</p>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
+
         </div>
-        <button onClick={handleLogout}>Logout</button>
+
+        <button id="logout_btn" onClick={handleLogout}>Logout</button>
       </div>
     </div>
   ) : (

@@ -1,36 +1,81 @@
-#customer_details {
-  
-  background-size: cover; /* make it cover entire element */
-  background-repeat: no-repeat; /* prevent repeating */
-  background-position: center center; /* center the image */
-  background-blend-mode:soft-light;
-  background-color: #f2f9f1;
-  width: 500px;
-  height: 200px;
-  font-size: 10px;
-  color: black;
-  border-radius: 5px;
-  border: 3px ridge black;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
+.review-tile {
   display: flex;
+  align-items: center;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 14px;
+  box-shadow: 0 12px 20px rgba(26, 26, 46, 0.12);
+  color: #222;
+  box-sizing: border-box;
+  min-height: 180px;
+  max-width: 600px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  gap: 1.5rem;
 }
-img {
-  margin-left: 10px;
-  margin-top: 10px;
+
+.review-tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 36px rgba(26, 26, 46, 0.18);
+}
+
+/* Left side: Image + Name */
+.cust-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
   width: 120px;
-  height: 120px;
 }
-h2 {
-  margin-top: 0px;
+
+.cust-left img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  border: 2px solid #8ecae6;
 }
-#left {
-  align-items: start;
-}
-#right {
-  margin-left: 10px;
-  align-items: end;
-}
-p {
+
+.cust-left h3 {
+  font-size: 0.95rem;
   font-weight: 600;
+  color: #264653;
+  margin: 0;
+  text-align: center;
+}
+
+/* Right side: Review */
+.cust-right {
+  flex: 1;
+  text-align: left;
+}
+
+.cust-right p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin: 0;
+  color: #333;
+}
+
+/* Mobile: Stack vertically */
+@media screen and (max-width: 600px) {
+  .review-tile {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.2rem;
+  }
+
+  .cust-right {
+    text-align: center;
+  }
+
+  .cust-left {
+    width: auto;
+  }
+
+  .cust-right p {
+    font-size: 1rem;
+  }
 }
