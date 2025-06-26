@@ -2,50 +2,81 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 80px);
+  padding: 2rem 1rem;
+  min-height: 100vh;
   background-color: #eef6fb;
+  box-sizing: border-box;
 }
 
 .login-box {
   display: flex;
+  flex-direction: row;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   max-width: 900px;
   width: 100%;
+  transition: all 0.3s ease-in-out;
 }
 
-.login-left, .login-right {
-  padding: 2rem;
+/* Shared sides */
+.login-left,
+.login-right {
   flex: 1;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
 .login-left {
   border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
+.login-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Headings */
 .login-left h2,
 .login-right h2 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #333;
 }
 
+/* Input fields */
 .login-left input[type="text"],
 .login-left input[type="password"] {
   width: 100%;
-  padding: 0.7rem;
-  margin: 0.5rem 0 1rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
 }
 
+.login-left input[type="text"]:focus,
+.login-left input[type="password"]:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+/* Submit button */
 .login-left input[type="submit"] {
   background-color: #4caf50;
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -54,16 +85,40 @@
   background-color: #43a047;
 }
 
+/* Right side button */
 .login-right button {
   margin-top: 1rem;
   background-color: #4caf50;
   border: none;
   color: white;
-  padding: 0.6rem 1rem;
-  border-radius: 5px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .login-right button:hover {
   background-color: #43a047;
+}
+
+/* Media Query for Mobile */
+@media (max-width: 768px) {
+  .login-box {
+    flex-direction: column;
+  }
+
+  .login-left {
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .login-left h2,
+  .login-right h2 {
+    font-size: 1.5rem;
+  }
+
+  .login-right {
+    padding-top: 1.5rem;
+  }
 }

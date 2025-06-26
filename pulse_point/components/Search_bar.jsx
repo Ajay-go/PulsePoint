@@ -1,7 +1,7 @@
 import React from "react";
 import "./searchbar.css";
 import { useNavigate, NavLink } from "react-router-dom";
-import logo from "../src/assets/logo.png";
+import logo from "../src/assets/logop2.jpeg";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -272,7 +272,7 @@ function Searchbar() {
         <div id="brand_name">
           <h1>
             <NavLink to="/" className="link">
-              PulsePoint
+              pulsepoint
             </NavLink>
           </h1>
           <h3>CURE YOURSELF :)</h3>

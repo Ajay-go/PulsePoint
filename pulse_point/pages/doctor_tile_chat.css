@@ -1,0 +1,48 @@
+#doctor_details {
+  background-image: url("../src/assets/bg8.jpg");
+  background-blend-mode: soft-light;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-color: #e3f6f599;
+  width: 232px;
+  min-height: 300px;
+  font-size: 10px;
+  color: black;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+#doctor_details h2 {
+  color: #385170;
+  font-size: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 5px 0;
+  text-align:justify;
+}
+
+#doctor_details button {
+  background-color: #bae8e8;
+  border: none;
+  width: 100%;
+  height: 10%;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-left: 0%;
+  color: black;
+}
+
+#doctor_details button:hover {
+  background-color: #a0d9d9;
+}
+#doctor_details:hover{
+  background-color: #bae8e8;
+  transition-duration: 0.2s;
+}

@@ -88,6 +88,27 @@
 .input-box button:hover {
   background-color: #0056b3;
 }
+.message {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 8px;
+  max-width: 80%;
+}
+
+.user-message {
+  background-color: #d7f2ff;
+  align-self: flex-end;
+}
+
+.ai-message {
+  background-color: #f3f3f3;
+  align-self: flex-start;
+}
+
+.doctor-tile-wrapper {
+  margin: 10px 0;
+}
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }

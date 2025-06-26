@@ -24,14 +24,14 @@ const Footer = () => {
       <div className="footer-section">
         <h2>Contact Info</h2>
         <ul>
-          <li>Email: ajaygour.dev@gmail.com, krishna.mudgal@example.com</li>
+          <li>Email: ajaygour0304@gmail.com, krishnamudgal44@gmail.com</li>
           <li>
             LinkedIn:{" "}
-            <a href="https://www.linkedin.com/in/ajay-gour" target="_blank" rel="noreferrer">
+            <a href="https://www.linkedin.com/in/ajay-gour-498135296" target="_blank" rel="noreferrer">
               Ajay Gour
             </a>{" "}
             |{" "}
-            <a href="https://www.linkedin.com/in/krishna-mudgal" target="_blank" rel="noreferrer">
+            <a href="https://www.linkedin.com/in/krishna-mudgal-127a44283/" target="_blank" rel="noreferrer">
               Krishna Mudgal
             </a>
           </li>
@@ -41,7 +41,7 @@ const Footer = () => {
               Ajay-go
             </a>{" "}
             |{" "}
-            <a href="https://github.com/krishna-mudgal" target="_blank" rel="noreferrer">
+            <a href="https://github.com/Krishna-mudgal" target="_blank" rel="noreferrer">
               Krishna Mudgal
             </a>
           </li>

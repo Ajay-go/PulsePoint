@@ -1,6 +1,6 @@
 import Customer_Tile from "./customer_tile";
 import './customer_tile_slider.css';
-import cust_img from '../src/assets/nobita.jpg';
+import cust_img from '../src/assets/image.jpg';
 
 function Customer_slider() {
   return (
