@@ -31,7 +31,14 @@ function Appointments_customer_view(props) {
   }, [props.name, props.time]);
 
   async function handle_book() {
-    if (!doctorname) return;
+   const slotHour = parseInt(props.time.split(":")[0], 10);
+  const currentHour = new Date().getHours();
+
+  
+  if ( !doctorname ||slotHour < currentHour) {
+    alert("slot time has passed or missing doctor info :(");
+    return ;
+  }
 
     const docId = props.name.replace(/\s+/g, "_").replace(/\./g, "");
     const docRef = doc(db, "appointments", docId);

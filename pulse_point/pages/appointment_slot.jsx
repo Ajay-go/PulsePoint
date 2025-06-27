@@ -34,7 +34,15 @@ function Appointments(props) {
   }
 
   async function change_status() {
-    if (!doctor) return;
+    const slotHour = parseInt(props.time.split(":")[0], 10);
+  const currentHour = new Date().getHours();
+
+  
+  if (
+    !doctor ||
+    (typeof slotStatus === "string" && slotStatus.toLowerCase() === "booked") ||
+    slotHour < currentHour
+  ) return;
 
     const docId = doctor.name.replace(/\s+/g, "_").replace(/\./g, "");
     const docRef = doc(db, "appointments", docId);

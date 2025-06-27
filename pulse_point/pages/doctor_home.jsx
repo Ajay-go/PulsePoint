@@ -7,7 +7,7 @@ import { firestore } from "../src/firebase.js";
 
 function Doc_home() {
   const now = new Date();
-  const [today, setday] = useState(now.getMinutes())
+  const [today, setday] = useState(now.getMinutes());
   const [doctor, setDoctor] = useState(null);
   const [bookedSlots, setBookedSlots] = useState({});
   const navigate = useNavigate();
@@ -49,9 +49,6 @@ function Doc_home() {
     navigate("/");
   };
 
-  
-
-
   const toggleAllSlots = async (status) => {
     if (!doctor) return;
 
@@ -84,18 +81,23 @@ function Doc_home() {
     if (period === "am" && hourNum === 12) hourNum = 0;
     return hourNum;
   };
+  const now2 = new Date();
 
   return doctor ? (
     <div id="doc_page">
       <div id="doctor_home">
         <h2>Welcome {doctor.name}!</h2>
         <p className="doc-quote">
-          "Every patient you treat is a life you touch — your work truly matters."
+          "Every patient you treat is a life you touch — your work truly
+          matters."
         </p>
 
         <div id="toggleall">
-          <button onClick={() => toggleAllSlots("Unavailable")}>Set All Unavailable</button>
-          <button onClick={() => toggleAllSlots("Available")}>Set All Available</button>
+          {now2.getHours() <= 10 && (
+            <button onClick={() => toggleAllSlots("Unavailable")}>
+              Set All Unavailable
+            </button>
+          )}
         </div>
 
         <div id="appointment_slots">
@@ -116,7 +118,9 @@ function Doc_home() {
               <h3>Your Appointments for Today</h3>
               <div className="appointments-list">
                 {Object.entries(bookedSlots)
-                  .sort((a, b) => convertTimeTo24Hr(a[0]) - convertTimeTo24Hr(b[0]))
+                  .sort(
+                    (a, b) => convertTimeTo24Hr(a[0]) - convertTimeTo24Hr(b[0])
+                  )
                   .map(([time, patient]) => (
                     <div className="appointment-item" key={time}>
                       <p>
@@ -125,17 +129,19 @@ function Doc_home() {
                       <p>
                         <strong>Patient:</strong> {patient}
                       </p>
-                      <p className="email-note">Check your email for details.</p>
+                      <p className="email-note">
+                        Check your email for details.
+                      </p>
                     </div>
                   ))}
               </div>
             </div>
           )}
-
-
         </div>
 
-        <button id="logout_btn" onClick={handleLogout}>Logout</button>
+        <button id="logout_btn" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     </div>
   ) : (
