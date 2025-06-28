@@ -41,7 +41,7 @@ function Slider() {
               expirience={doc.experience_years}
               speciality={doc.speciality}
               education={doc.education}
-              location = {doc.Location}
+              location = {doc.location}
               
             />
           ))}

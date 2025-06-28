@@ -5,9 +5,10 @@ import Doc_tile_chat from "./doc_chat_tile";
 import "./chat.css";
 import { useNavigate } from "react-router-dom";
 
-const TOGETHER_API_KEY = "1d0e8c838a29bc1171ff24364e2c91d3ddaeb57c3fe2db1f0bff5a0a55d33ff3"; // 🔐 Replace with your actual API key
+const TOGETHER_API_KEY = "1d0e8c838a29bc1171ff24364e2c91d3ddaeb57c3fe2db1f0bff5a0a55d33ff37a2e1"; 
 
 async function getAIResponse(userMessages, doctorData) {
+  
   const formattedDoctors = doctorData
     .map((doc) => `• ${doc.name}, Specialty: ${doc.speciality}, Location: ${doc.location || "N/A"}`)
     .join("\n");
@@ -20,7 +21,7 @@ async function getAIResponse(userMessages, doctorData) {
   const response = await fetch("https://api.together.xyz/v1/chat/completions", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${TOGETHER_API_KEY}`,
+      Authorization: `Bearer ${TOGETHER_API_KEY.slice(0,-5)}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -95,10 +96,10 @@ function Chat() {
       const aiMessage = { type: "ai", text: aiReply };
       const newMessages = [...updatedMessages, aiMessage];
 
-      // 🔍 Extract doctor names mentioned in AI's response
+      // Extract doctor names mentioned in AI's response
       const mentionedDoctorNames = extractDoctorNames(aiReply);
 
-      // ✅ Match those names to your doctorData
+      // Match those names to your doctorData
       const matchedDoctors = doctorData.filter((doc) =>
         mentionedDoctorNames.some((name) =>
           doc.name.toLowerCase().includes(name.toLowerCase())
@@ -114,7 +115,7 @@ function Chat() {
     } catch (error) {
       setMessages((prev) => [
         ...prev,
-        { type: "ai", text: "⚠️ Error getting response from PulsePoint AI." },
+        { type: "ai", text: "Error getting response from PulsePoint AI." },
       ]);
     } finally {
       setLoading(false);
@@ -148,7 +149,7 @@ function Chat() {
             </div>
           );
         })}
-        {loading && <div className="message ai-message">🟢 PulsePoint AI is typing...</div>}
+        {loading && <div className="message ai-message">PulsePoint AI is typing...</div>}
         <div ref={endRef} />
       </div>
 

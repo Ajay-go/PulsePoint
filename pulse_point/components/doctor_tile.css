@@ -67,7 +67,7 @@
 @media screen and (max-width: 768px) {
   #doctor_details {
     max-width: 100%;
-    width: 90%;
+    width: 60%;
     margin: 15px auto;
     font-size: 13px;
   }
@@ -78,10 +78,39 @@
   }
 
   #doctor_details h2 {
-    font-size: 14px;
+    font-size: 10px;
   }
 
   #doctor_details button {
-    font-size: 13px;
+    font-size: 10px;
   }
 }
+@media screen and (max-width: 450px) {
+  #doctor_details {
+    width: 90%;
+    padding: 10px;
+    min-height: 250px;
+    font-size: 12px;
+  }
+
+  #doctor_details img {
+    width: 70px;
+    height: 70px;
+  }
+
+  #doctor_details h2 {
+    font-size: 12px;
+  }
+
+  #doctor_details button {
+    font-size: 12px;
+    padding: 8px 0;
+  }
+}
+#tile_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
