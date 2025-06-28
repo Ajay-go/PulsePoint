@@ -23,7 +23,7 @@ import emailjs from '@emailjs/browser';
 
 function App() {
   useEffect(() => {
-    emailjs.init("zMHW8M2G0hFh7NHFa"); // ✅ Your actual public key
+    emailjs.init("zMHW8M2G0hFh7NHFa"); // public key
   }, []);
 
   return (
