@@ -1,44 +1,32 @@
-const { onSchedule } = require("firebase-functions/v2/scheduler");
-const { initializeApp } = require("firebase-admin/app");
-const { getFirestore } = require("firebase-admin/firestore");
+/**
+ * Import function triggers from their respective submodules:
+ *
+ * const {onCall} = require("firebase-functions/v2/https");
+ * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
+ *
+ * See a full list of supported triggers at https://firebase.google.com/docs/functions
+ */
 
-initializeApp();
-const firestore = getFirestore();
+const {setGlobalOptions} = require("firebase-functions");
+const {onRequest} = require("firebase-functions/https");
+const logger = require("firebase-functions/logger");
 
-exports.resetDoctorSlotsDaily = onSchedule(
-  {
-    schedule: "every day 06:00",
-    timeZone: "Asia/Kolkata",
-  },
-  async (event) => {
-    console.log("Running scheduled doctor slot reset...");
+// For cost control, you can set the maximum number of containers that can be
+// running at the same time. This helps mitigate the impact of unexpected
+// traffic spikes by instead downgrading performance. This limit is a
+// per-function limit. You can override the limit for each function using the
+// `maxInstances` option in the function's options, e.g.
+// `onRequest({ maxInstances: 5 }, (req, res) => { ... })`.
+// NOTE: setGlobalOptions does not apply to functions using the v1 API. V1
+// functions should each use functions.runWith({ maxInstances: 10 }) instead.
+// In the v1 API, each function can only serve one request per container, so
+// this will be the maximum concurrent request count.
+setGlobalOptions({ maxInstances: 10 });
 
-    try {
-      const doctorsSnapshot = await firestore.collection("pulse_point").get();
+// Create and deploy your first functions
+// https://firebase.google.com/docs/functions/get-started
 
-      for (const docSnap of doctorsSnapshot.docs) {
-        const doctorId = docSnap.id;
-        const formattedDocId = doctorId.replace(/\s+/g, "_").replace(/\./g, "");
-        const appointmentRef = firestore.collection("appointments").doc(formattedDocId);
-
-        const updatedSlots = {
-          "10-am": "Available",
-          "11-am": "Available",
-          "12-pm": "Available",
-          "14-pm": "Available",
-          "15-pm": "Available",
-          "16-pm": "Available",
-          "17-pm": "Available",
-          "18-pm": "Available",
-        };
-
-        await appointmentRef.set(updatedSlots, { merge: true });
-        console.log(`✅ Updated slots for ${doctorId}`);
-      }
-
-      console.log("🎉 All doctor slots updated successfully.");
-    } catch (err) {
-      console.error("❌ Error resetting slots:", err);
-    }
-  }
-);
+// exports.helloWorld = onRequest((request, response) => {
+//   logger.info("Hello logs!", {structuredData: true});
+//   response.send("Hello from Firebase!");
+// });
