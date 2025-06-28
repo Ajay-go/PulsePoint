@@ -1,7 +1,21 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-})
+  base: '/', // ← Critical for Vercel
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    sourcemap: false, // Disable for production
+    chunkSizeWarningLimit: 1600,
+  },
+  server: {
+    port: 3000,
+    strictPort: true,
+  },
+  preview: {
+    port: 3000,
+    strictPort: true,
+  }
+});
