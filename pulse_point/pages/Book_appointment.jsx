@@ -43,27 +43,36 @@ function Book() {
   if (!doctor) return <p>Doctor not found</p>;
 
   return (
-    <div id="book_main">
-      <div id="book_page">
-        <img src={doctor.img_src} alt={doctor.name} />
-        <p>Name: {doctor.name}</p>
-        <p>Speciality: {doctor.speciality}</p>
-        <p>Experience: {doctor.experience_years} years</p>
-        <p>Education: {doctor.education}</p>
-        <p>Consultation Fees: {doctor.fees}</p>
-        
-        <div id="appointment_slots">
-          <Appointments_customer_view time={'10-am'} name={doctor.name} username={doctor.docId} />
-          <Appointments_customer_view time={'11-am'} name={doctor.name} username={doctor.docId} />
-          <Appointments_customer_view time={'12-pm'} name={doctor.name} username={doctor.docId} />
-          <Appointments_customer_view time={'14-pm'} name={doctor.name} username={doctor.docId} />
-          <Appointments_customer_view time={'15-pm'} name={doctor.name} username={doctor.docId} />
-          <Appointments_customer_view time={'16-pm'} name={doctor.name} username={doctor.docId} />
-          <Appointments_customer_view time={'17-pm'} name={doctor.name} username={doctor.docId} />
-          <Appointments_customer_view time={'18-pm'} name={doctor.name} username={doctor.docId} />
+    <>
+      <div id="book_main">
+        <div id="book_page">
+          <img src={doctor.img_src} alt={doctor.name} />
+          <p>Name: {doctor.name}</p>
+          <p>Speciality: {doctor.speciality}</p>
+          <p>Experience: {doctor.experience_years} years</p>
+          <p>Education: {doctor.education}</p>
+          <p>Consultation Fees: {doctor.fees}</p>
+          
+          <div id="appointment_slots">
+            <Appointments_customer_view time={'10-am'} name={doctor.name} username={doctor.docId} />
+            <Appointments_customer_view time={'11-am'} name={doctor.name} username={doctor.docId} />
+            <Appointments_customer_view time={'12-pm'} name={doctor.name} username={doctor.docId} />
+            <Appointments_customer_view time={'14-pm'} name={doctor.name} username={doctor.docId} />
+            <Appointments_customer_view time={'15-pm'} name={doctor.name} username={doctor.docId} />
+            <Appointments_customer_view time={'16-pm'} name={doctor.name} username={doctor.docId} />
+            <Appointments_customer_view time={'17-pm'} name={doctor.name} username={doctor.docId} />
+            <Appointments_customer_view time={'18-pm'} name={doctor.name} username={doctor.docId} />
+          </div>
         </div>
       </div>
-    </div>
+      <div
+        style={{
+          backgroundColor: '#f05f70',color: 'white',textAlign: 'center',padding: '10px 0',fontSize: '0.9rem',width: '100%',position: 'relative',bottom: '0',left: '0',borderRadius: '0',marginTop: '40px',fontFamily: 'Arial, sans-serif'
+        }}
+      >
+        &copy; {new Date().getFullYear()} Pulse Point
+      </div>
+    </>
   );
 }
 

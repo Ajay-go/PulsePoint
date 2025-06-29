@@ -6,13 +6,8 @@ import { ref, set, get, child } from 'firebase/database';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { ImCross } from 'react-icons/im';
 
-
 const Signup_page = () => {
   const navigate = useNavigate();
-
-  function handle_login_click() {
-    navigate('/login')
-  }
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -23,31 +18,70 @@ const Signup_page = () => {
     gender: ''
   });
 
+  const [verifyButtonClicked, setVerifyButtonClicked] = useState(false);
+  const [showVerificationMessage, setShowVerificationMessage] = useState(false);
+  const [emailAlreadySent, setEmailAlreadySent] = useState(false);
+
+
   const handleChange = (e) => {
     const { id, value, name, type } = e.target;
     const key = type === 'radio' ? name : id;
-    const val = value;
-
-    setFormData((prev) => ({
-      ...prev,
-      [key]: val
-    }));
+    setFormData(prev => ({ ...prev, [key]: value }));
   };
+
+  const handleEmailVerify = async () => {
+    const { email, password } = formData;
+
+    if (!email || !password) {
+      alert("Please enter both email and password before verification.");
+      return;
+    }
+
+    if (verifyButtonClicked) {
+      setEmailAlreadySent(true);
+      setTimeout(() => setEmailAlreadySent(false), 5000);
+      return;
+    }
+
+    try {
+      const userCred = await createUserWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(userCred.user);
+      alert("Verification email sent.");
+      setVerifyButtonClicked(true);
+      setShowVerificationMessage(true);
+
+      setTimeout(() => {
+        setShowVerificationMessage(false);
+      }, 5000);
+    } catch (error) {
+      alert("Error sending verification email: " + error.message);
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { username, email, password } = formData;
+    const { username, email } = formData;
     const dbRef = ref(database);
 
     try {
-      // Check username uniqueness
+      if (!verifyButtonClicked) {
+        alert("Please verify your email first.");
+        return;
+      }
+
+      await auth.currentUser.reload();
+      if (!auth.currentUser.emailVerified) {
+        alert("Email not verified yet. Please verify before signing up.");
+        return;
+      }
+
       const usernameSnapshot = await get(child(dbRef, `users/${username}`));
       if (usernameSnapshot.exists()) {
         alert("Username already taken. Please choose another.");
         return;
       }
 
-      // Check email uniqueness
       const allUsersSnapshot = await get(child(dbRef, 'users'));
       if (allUsersSnapshot.exists()) {
         const users = allUsersSnapshot.val();
@@ -58,28 +92,9 @@ const Signup_page = () => {
         }
       }
 
-      // Create user in Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // Send verification email
-      await sendEmailVerification(user);
-      alert("A verification email has been sent. Please verify your email first and then click on OK.");
-
-      // Reload user to update verification status
-      await user.reload();
-
-      if (user.emailVerified) {
-        // Store user data if verified
-        await set(ref(database, `users/${username}`), formData);
-        localStorage.setItem('pulsePointUser', JSON.stringify(formData));
-        alert("Email verified and signup successful!");
-      } else {
-        // Email not verified → delete user from Auth
-        await user.delete();
-        alert("Email not verified. Signup canceled. Redirecting to home.");
-      }
-
+      await set(ref(database, `users/${username}`), formData);
+      localStorage.setItem('pulsePointUser', JSON.stringify(formData));
+      alert("Signup successful!");
       navigate('/');
     } catch (error) {
       console.error("Signup Error:", error.message);
@@ -87,10 +102,11 @@ const Signup_page = () => {
     }
   };
 
+  function handle_login_click(){
+    navigate('/login');
+  };
 
-
-
-  const goHome = () => {
+  function goHome(){
     navigate('/');
   };
 
@@ -112,8 +128,7 @@ const Signup_page = () => {
           }}
           aria-label="Close"
         >
-          <ImCross/>
-
+          <ImCross />
         </button>
       </header>
 
@@ -132,8 +147,32 @@ const Signup_page = () => {
               </div>
               <div id='user_data'>
                 <label htmlFor="email">Email</label>
-                <input type="email" id="email" placeholder="Enter your email" required onChange={handleChange} />
+                <div className="email-verify-group">
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                    onChange={handleChange}
+                    value={formData.email}
+                  />
+                  <button type="button" onClick={handleEmailVerify}>
+                    Verify
+                  </button>
+                </div>
+                {showVerificationMessage && !emailAlreadySent && (
+                  <p className="verification-message">
+                    Please verify your email first and then proceed.
+                  </p>
+                )}
+
+                {emailAlreadySent && (
+                  <p className="verification-message">
+                    Verification email already sent. Please check your inbox.
+                  </p>
+                )}
               </div>
+
               <div id='user_data'>
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" placeholder="Create a password" required onChange={handleChange} />
@@ -142,7 +181,7 @@ const Signup_page = () => {
                 <label htmlFor="phone">Phone Number</label>
                 <input type="tel" id="phone" placeholder="Enter your phone number" required onChange={handleChange} />
               </div>
-              
+
               <div id='submit_form'>
                 <input type="submit" value="Sign Up" />
               </div>
@@ -157,9 +196,14 @@ const Signup_page = () => {
         </section>
       </main>
 
-      <footer>
-        <p>&copy; 2025 Pulse Point</p>
-      </footer>
+      <div
+        style={{
+          backgroundColor: '#f05f70',color: 'white',textAlign: 'center',padding: '10px 0',fontSize: '0.9rem',width: '100%',position: 'relative',bottom: '0',left: '0',borderRadius: '0',marginTop: '40px',fontFamily: 'Arial, sans-serif'
+        }}
+      >
+        &copy; {new Date().getFullYear()} Pulse Point
+      </div>
+
     </>
   );
 };

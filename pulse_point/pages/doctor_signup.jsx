@@ -92,74 +92,82 @@ function Doc_signup() {
 
 
   return (
-    <div id="doctor_form">
 
-      <header style={{ position: "relative" }}>
-        <h2>Pulse Point</h2>
-        <button
-          onClick={goHome}
-          style={{
-            position: "absolute",
-            top: "10px",
-            right: "15px",
-            fontSize: "20px",
-            background: "transparent",
-            border: "none",
-            cursor: "pointer",
-            color: "#333",
-          }}
-          aria-label="Close"
-        >
-          <ImCross />
-        </button>
-      </header>
+    <>
 
-      <main className="signup-container">
-        <section className="signup-box">
-          <div className="signup-left">
-            <h2>Sign Up as Doctor</h2>
-            <form onSubmit={handleSubmit}>
-              {[
-                { id: "name", label: "Full Name", type: "text" },
-                { id: "username", label: "Username", type: "text" },
-                { id: "email", label: "Email", type: "email" },
-                { id: "password", label: "Password", type: "password" },
-                { id: "Education", label: "Education", type: "text" },
-                { id: "Experience", label: "Experience (years)", type: "number" },
-                { id: "Fees", label: "Fees", type: "number" },
-                { id: "Speciality", label: "Speciality", type: "text" },
-                { id: "location", label: "Location", type: "text" }
-              ].map(({ id, label, type }) => (
-                <div key={id} id="user_data">
-                  <label htmlFor={id}>{label}</label>
-                  <input
-                    type={type}
-                    id={id}
-                    value={formData[id]}
-                    onChange={handleChange}
-                    placeholder={`Enter ${label}`}
-                    required
-                  />
+      <div id="doctor_form">
+
+        <header style={{ position: "relative" }}>
+          <h2>Pulse Point</h2>
+          <button
+            onClick={goHome}
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "15px",
+              fontSize: "20px",
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              color: "#333",
+            }}
+            aria-label="Close"
+          >
+            <ImCross />
+          </button>
+        </header>
+
+        <main className="signup-container">
+          <section className="signup-box">
+            <div className="signup-left">
+              <h2>Sign Up as Doctor</h2>
+              <form onSubmit={handleSubmit}>
+                {[
+                  { id: "name", label: "Full Name", type: "text" },
+                  { id: "username", label: "Username", type: "text" },
+                  { id: "email", label: "Email", type: "email" },
+                  { id: "password", label: "Password", type: "password" },
+                  { id: "Education", label: "Education", type: "text" },
+                  { id: "Experience", label: "Experience (years)", type: "number" },
+                  { id: "Fees", label: "Fees", type: "number" },
+                  { id: "Speciality", label: "Speciality", type: "text" },
+                  { id: "location", label: "Location", type: "text" }
+                ].map(({ id, label, type }) => (
+                  <div key={id} id="user_data">
+                    <label htmlFor={id}>{label}</label>
+                    <input
+                      type={type}
+                      id={id}
+                      value={formData[id]}
+                      onChange={handleChange}
+                      placeholder={`Enter ${label}`}
+                      required
+                    />
+                  </div>
+                ))}
+
+                <div id="submit_form">
+                  <input type="submit" value="Sign Up" />
                 </div>
-              ))}
+              </form>
+            </div>
 
-              <div id="submit_form">
-                <input type="submit" value="Sign Up" />
-              </div>
-            </form>
-          </div>
+            <div className="signup-right">
+              <p>Already have an account?</p>
+              <button onClick={handleLoginClick}>Doctor Login</button>
+            </div>
+          </section>
+        </main>
+      </div>
 
-          <div className="signup-right">
-            <p>Already have an account?</p>
-            <button onClick={handleLoginClick}>Doctor Login</button>
-          </div>
-        </section>
-      </main>
-
-      <footer>
-        <p>&copy; 2025 Pulse Point</p>
-      </footer>
-    </div>
+      <div
+        style={{
+          backgroundColor: '#f05f70',color: 'white',textAlign: 'center',padding: '10px 0',fontSize: '0.9rem',width: '100%',position: 'relative',bottom: '0',left: '0',borderRadius: '0',marginTop: '40px',fontFamily: 'Arial, sans-serif'
+        }}
+      >
+        &copy; {new Date().getFullYear()} Pulse Point
+      </div>
+    </>
   );
 }
 
