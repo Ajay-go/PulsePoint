@@ -127,50 +127,59 @@ function Chat() {
   };
 
   return (
-    <div className="chat-container">
-      <div className="chat-box">
-        {messages.map((msg, index) => {
-          if (msg.type === "component") {
+    <>
+      <div className="chat-container">
+        <div className="chat-box">
+          {messages.map((msg, index) => {
+            if (msg.type === "component") {
+              return (
+                <div key={index} className="message doctor-tile-wrapper">
+                  {msg.component}
+                </div>
+              );
+            }
+
             return (
-              <div key={index} className="message doctor-tile-wrapper">
-                {msg.component}
+              <div
+                key={index}
+                className={
+                  msg.type === "user" ? "message user-message" : "message ai-message"
+                }
+              >
+                {msg.text}
               </div>
             );
-          }
+          })}
+          {loading && <div className="message ai-message">PulsePoint AI is typing...</div>}
+          <div ref={endRef} />
+        </div>
 
-          return (
-            <div
-              key={index}
-              className={
-                msg.type === "user" ? "message user-message" : "message ai-message"
-              }
-            >
-              {msg.text}
-            </div>
-          );
-        })}
-        {loading && <div className="message ai-message">PulsePoint AI is typing...</div>}
-        <div ref={endRef} />
+        <div className="input-box">
+          <input
+            type="text"
+            placeholder="Type your message..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={handleKeyPress}
+            disabled={loading}
+          />
+          <button onClick={handleSend} disabled={loading}>
+            Send
+          </button>
+          <button onClick={()=>navigate('/')} disabled={loading}>
+            close
+          </button>
+
+        </div>
       </div>
-
-      <div className="input-box">
-        <input
-          type="text"
-          placeholder="Type your message..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={handleKeyPress}
-          disabled={loading}
-        />
-        <button onClick={handleSend} disabled={loading}>
-          Send
-        </button>
-        <button onClick={()=>navigate('/')} disabled={loading}>
-          close
-        </button>
-
+      <div
+        style={{
+          backgroundColor: '#f05f70',color: 'white',textAlign: 'center',padding: '10px 0',fontSize: '0.9rem',width: '100%',position: 'relative',bottom: '0',left: '0',borderRadius: '0',marginTop: '40px',fontFamily: 'Arial, sans-serif'
+        }}
+      >
+        &copy; {new Date().getFullYear()} Pulse Point
       </div>
-    </div>
+    </>
   );
 }
 

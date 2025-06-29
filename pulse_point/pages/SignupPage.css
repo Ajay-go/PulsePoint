@@ -145,16 +145,17 @@ main {
   background-color: #FDBDBD;
 }
 
-footer {
+.simple-footer {
   background-color: #f05f70;
   color: white;
   text-align: center;
   padding: 10px 0;
   font-size: 0.9rem;
   width: 60%;
-  margin: 40px auto;
+  margin: 40px auto 0;
   border-radius: 8px;
 }
+
 
 .email-verify-group {
   display: flex;

@@ -6,17 +6,21 @@ import ImageTextSection from "../components/middle_bar";
 import Footer from "../components/footer";
 function HomePage() {
   return (
-    <div>
+
+    <>
+
+      <div>
       
 
-      <div id="main_page">
-        <Searchbar />
-        <Slider />
-        <ImageTextSection/>
-        <Customer_slider />
-        <Footer/>
+        <div id="main_page">
+          <Searchbar />
+          <Slider />
+          <ImageTextSection/>
+          <Customer_slider />
+          <Footer/>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 export default HomePage;

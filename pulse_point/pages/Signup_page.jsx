@@ -196,9 +196,14 @@ const Signup_page = () => {
         </section>
       </main>
 
-      <footer>
-        <p>&copy; 2025 Pulse Point</p>
-      </footer>
+      <div
+        style={{
+          backgroundColor: '#f05f70',color: 'white',textAlign: 'center',padding: '10px 0',fontSize: '0.9rem',width: '100%',position: 'relative',bottom: '0',left: '0',borderRadius: '0',marginTop: '40px',fontFamily: 'Arial, sans-serif'
+        }}
+      >
+        &copy; {new Date().getFullYear()} Pulse Point
+      </div>
+
     </>
   );
 };
