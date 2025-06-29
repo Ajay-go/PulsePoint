@@ -45,7 +45,7 @@
 }
 
 #doctor_details button {
-  background-color: #00c8c8;
+  background-color: #3ba7c3;
   border: none;
   width: 100%;
   padding: 10px 0;
@@ -55,6 +55,7 @@
   color: white;
   border-radius: 6px;
   margin-top: 10px;
+  margin-left: 0px;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 

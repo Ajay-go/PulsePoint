@@ -20,7 +20,7 @@ const SearchResultsPage = () => {
             speciality={doc.speciality}
             img_url={doc.img_src}
             expirience={doc.experience_years}
-            location ={ doc.location}
+            location = {doc.location}
           />
         ))
       )}

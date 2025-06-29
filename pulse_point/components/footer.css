@@ -9,6 +9,7 @@
   box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+
 }
 
 .footer-section {
@@ -29,7 +30,7 @@
   font-size: 1rem;
   line-height: 1.6;
   color: #222;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.1rem;
 }
 
 .footer ul {
@@ -85,7 +86,8 @@
 /* Mobile view */
 @media (max-width: 480px) {
   .footer {
-    padding: 1.5rem 6%;
+    margin-top: 0.5vh;
+    padding: 1rem 6%;
   }
 
   .footer h2 {
@@ -94,6 +96,7 @@
 
   .footer p,
   .footer li {
+    margin-top: 0.5vh;
     font-size: 0.9rem;
   }
 

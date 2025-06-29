@@ -1,12 +1,8 @@
-#doctor_details {
-  background-image: url("../src/assets/bg8.jpg");
-  background-blend-mode: soft-light;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+#doctors {
+ 
   background-color: #e3f6f599;
   width: 232px;
-  min-height: 300px;
+  height:auto;
   font-size: 10px;
   color: black;
   border-radius: 5px;
@@ -18,15 +14,18 @@
 }
 
 
-#doctor_details h2 {
+#doctors {
   color: #385170;
-  font-size: 15px;
+  font-size: 10px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 5px 0;
   text-align:justify;
 }
+#doctors h2{
+  font-size: medium;
+}
 
-#doctor_details button {
+#doctors button {
   background-color: #bae8e8;
   border: none;
   width: 100%;
@@ -39,10 +38,10 @@
   color: black;
 }
 
-#doctor_details button:hover {
+#doctors button:hover {
   background-color: #a0d9d9;
 }
-#doctor_details:hover{
+#doctors:hover{
   background-color: #bae8e8;
   transition-duration: 0.2s;
 }
