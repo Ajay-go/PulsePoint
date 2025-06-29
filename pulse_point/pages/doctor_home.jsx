@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Appointments from "./appointment_slot";
 import "./doctor_home.css";
@@ -6,10 +6,9 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { firestore } from "../src/firebase.js";
 
 function Doc_home() {
-  const now = new Date();
-  const [today, setday] = useState(now.getMinutes());
   const [doctor, setDoctor] = useState(null);
   const [bookedSlots, setBookedSlots] = useState({});
+  const [currentHour, setCurrentHour] = useState(new Date().getHours());
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,6 +20,14 @@ function Doc_home() {
     } else {
       navigate("/doctor-login");
     }
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHour(new Date().getHours());
+    }, 60000); // update every 1 minute
+
+    return () => clearInterval(interval);
   }, []);
 
   const fetchBookedSlots = async (name) => {
@@ -37,7 +44,7 @@ function Doc_home() {
           val.toLowerCase() !== "available" &&
           val.toLowerCase() !== "unavailable"
         ) {
-          booked[time] = val; // patient name
+          booked[time] = val;
         }
       }
       setBookedSlots(booked);
@@ -49,30 +56,38 @@ function Doc_home() {
     navigate("/");
   };
 
-  const toggleAllSlots = async (status) => {
-    if (!doctor) return;
+ const toggleAllSlots = async (status) => {
+  const currentHour = new Date().getHours();
 
-    const updatedSlots = {
-      "10-am": status,
-      "11-am": status,
-      "12-pm": status,
-      "14-pm": status,
-      "15-pm": status,
-      "16-pm": status,
-      "17-pm": status,
-      "18-pm": status,
-    };
+  if (currentHour > 10) {
+    alert("Cannot make changes after 10 AM");
+    return;
+  }
 
-    const docId = doctor.name.replace(/\s+/g, "_").replace(/\./g, "");
-    const docRef = doc(firestore, "appointments", docId);
+  if (!doctor) return;
 
-    try {
-      await updateDoc(docRef, updatedSlots);
-      window.location.reload();
-    } catch (error) {
-      console.error("Failed to update slots:", error);
-    }
+  const updatedSlots = {
+    "10-am": status,
+    "11-am": status,
+    "12-pm": status,
+    "14-pm": status,
+    "15-pm": status,
+    "16-pm": status,
+    "17-pm": status,
+    "18-pm": status,
   };
+
+  const docId = doctor.name.replace(/\s+/g, "_").replace(/\./g, "");
+  const docRef = doc(firestore, "appointments", docId);
+
+  try {
+    await updateDoc(docRef, updatedSlots);
+    window.location.reload();
+  } catch (error) {
+    console.error("Failed to update slots:", error);
+  }
+};
+
 
   const convertTimeTo24Hr = (timeStr) => {
     const [hour, period] = timeStr.split("-");
@@ -81,7 +96,6 @@ function Doc_home() {
     if (period === "am" && hourNum === 12) hourNum = 0;
     return hourNum;
   };
-  const now2 = new Date();
 
   return doctor ? (
     <div id="doc_page">
@@ -93,7 +107,7 @@ function Doc_home() {
         </p>
 
         <div id="toggleall">
-          {now2.getHours() <= 10 && (
+          {currentHour <= 10 && (
             <button onClick={() => toggleAllSlots("Unavailable")}>
               Set All Unavailable
             </button>
@@ -119,7 +133,8 @@ function Doc_home() {
               <div className="appointments-list">
                 {Object.entries(bookedSlots)
                   .sort(
-                    (a, b) => convertTimeTo24Hr(a[0]) - convertTimeTo24Hr(b[0])
+                    (a, b) =>
+                      convertTimeTo24Hr(a[0]) - convertTimeTo24Hr(b[0])
                   )
                   .map(([time, patient]) => (
                     <div className="appointment-item" key={time}>

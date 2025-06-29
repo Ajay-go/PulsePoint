@@ -10,6 +10,43 @@
         "firebase-debug.*.log",
         "*.local"
       ]
+    },
+    {
+      "source": "pulsep",
+      "codebase": "pulsep",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
     }
-  ]
+  ],
+  "firestore": {
+    "database": "(default)",
+    "location": "asia-south1",
+    "rules": " firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "database": {
+    "rules": "database.rules.json"
+  }
 }

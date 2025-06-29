@@ -67,7 +67,7 @@
   #review {
     padding: 6vw 5vw;
     margin-top: 10vh;
-    min-height: 180px;
+    height: 50vh;
   }
 
   #review h2 {
