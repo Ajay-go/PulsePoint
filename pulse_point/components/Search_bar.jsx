@@ -4,8 +4,9 @@ import { useNavigate, NavLink } from "react-router-dom";
 import logo from "../src/assets/logop2.jpeg";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
-import { useEffect } from "react";
 import Fuse from "fuse.js";
+import { TbMessageChatbot } from "react-icons/tb";
+import { CgProfile } from "react-icons/cg";
 
 function Searchbar() {
   const navigate = useNavigate();
@@ -307,11 +308,11 @@ function Searchbar() {
           ) : (
             <>
               <div id="chat_with_ai">
-                <button onClick={handle_chat_click}>Chat with ai</button>
+                <button onClick={handle_chat_click}>Ai Chat <TbMessageChatbot /></button>
               </div>
 
               <div id="profile_button">
-                <button onClick={handle_profile_click}>Profile</button>
+                <button onClick={handle_profile_click}>Profile <CgProfile /></button>
               </div>
             </>
           )}

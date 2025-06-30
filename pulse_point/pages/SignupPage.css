@@ -38,7 +38,7 @@ main {
 
 .signup-left {
   flex: 1;
-  padding: 30px;
+  padding: 0px;
   background-color: white;
 }
 
@@ -66,6 +66,7 @@ main {
 #user_data {
   text-align: left;
   width: 100%;
+  margin-top: 0;
 }
 
 #submit_form {
@@ -194,6 +195,7 @@ main {
 
 @media (max-width: 850px) {
   .email-verify-group {
+    width: 90%;
     flex-direction: column;
     align-items: center;
     gap: 8px;
@@ -205,7 +207,7 @@ main {
   }
 
   .email-verify-group button {
-    width: 50%;
+    width: 90%;
     font-size: 0.8rem;
     padding: 8px 0;
     height: auto;

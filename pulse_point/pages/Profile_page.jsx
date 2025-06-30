@@ -63,7 +63,6 @@ const ProfilePage = () => {
               <p><strong>Username:</strong> {userData.username}</p>
               <p><strong>Email:</strong> {userData.email}</p>
               <p><strong>Phone:</strong> {userData.phone}</p>
-              <p><strong>Gender:</strong> {userData.gender}</p>
               <button onClick={handleGoHome}>Go to Home</button>
               <button onClick={handleLogout}>Logout</button>
             </div>
