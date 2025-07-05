@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './Login_page.css';
 import { useNavigate } from 'react-router-dom';
-import { database } from '../src/firebase';
-import { ref, get, child } from 'firebase/database';
 import { ImCross } from 'react-icons/im';
+import { firestore } from '../src/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -14,39 +14,41 @@ const LoginPage = () => {
     setCredentials(prev => ({ ...prev, [id]: value }));
   };
 
-  function goHome() {
+  const goHome = () => {
     navigate('/');
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const { userInput, password } = credentials;
-    const dbRef = ref(database);
 
     try {
-      const snapshot = await get(child(dbRef, 'users'));
+      const usersRef = collection(firestore, 'users');
+      const snapshot = await getDocs(usersRef);
 
-      if (snapshot.exists()) {
-        const users = snapshot.val();
-        const matchedUser = Object.entries(users).find(([_, data]) =>
-          data.username === userInput || data.email === userInput
-        );
+      let matchedUser = null;
 
-        if (matchedUser) {
-          const [_, userData] = matchedUser;
-          if (userData.password === password) {
-            localStorage.setItem('pulsePointUser', JSON.stringify(userData));
-            alert('Login successful!');
-            navigate('/'); // Redirect to home page
-          } else {
-            alert('Wrong password. Please try again.');
-          }
-        } else {
-          alert('Username or email is incorrect.');
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        if (data.username === userInput || data.email === userInput) {
+          matchedUser = data;
         }
-      } else {
-        alert('No users found.');
+      });
+
+      if (!matchedUser) {
+        alert('Username or email is incorrect.');
+        return;
       }
+
+      if (matchedUser.password !== password) {
+        alert('Wrong password. Please try again.');
+        return;
+      }
+
+      localStorage.setItem('pulsePointUser', JSON.stringify(matchedUser));
+      alert('Login successful!');
+      navigate('/');
+
     } catch (error) {
       console.error('Login error:', error);
       alert('Login failed. Please try again.');
@@ -71,7 +73,7 @@ const LoginPage = () => {
           }}
           aria-label="Close"
         >
-          <ImCross/>
+          <ImCross />
         </button>
       </header>
 
@@ -113,15 +115,25 @@ const LoginPage = () => {
           </div>
         </section>
       </main>
-      
+
       <div
         style={{
-          backgroundColor: '#f05f70',color: 'white',textAlign: 'center',padding: '10px 0',fontSize: '0.9rem',width: '100%',position: 'relative',bottom: '0',left: '0',borderRadius: '0',marginTop: '40px',fontFamily: 'Arial, sans-serif'
+          backgroundColor: '#f05f70',
+          color: 'white',
+          textAlign: 'center',
+          padding: '10px 0',
+          fontSize: '0.9rem',
+          width: '100%',
+          position: 'relative',
+          bottom: '0',
+          left: '0',
+          borderRadius: '0',
+          marginTop: '40px',
+          fontFamily: 'Arial, sans-serif'
         }}
       >
         &copy; {new Date().getFullYear()} Pulse Point
       </div>
-
     </>
   );
 };

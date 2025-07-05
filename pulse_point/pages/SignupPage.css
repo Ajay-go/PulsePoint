@@ -159,28 +159,53 @@ main {
 
 .email-verify-group {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin-left: 4%;
   width: 90%;
+  margin-left: 4%;
+  gap: 10px;
 }
 
 .email-verify-group input[type="email"] {
   flex: 1;
+  min-width: 0;
 }
 
 .email-verify-group button {
-  padding: 6px 10px;
-  font-size: 0.75rem;
+  flex-shrink: 0;
+  padding: 8px 14px;
+  font-size: 0.85rem;
   background-color: #f05f70;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  margin-left: 10px;
-  white-space: nowrap;
   height: 38px;
+  white-space: nowrap;
 }
 
 .email-verify-group button:hover {
   background-color: #d64b5c;
 }
+
+@media (max-width: 480px) {
+  .email-verify-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .email-verify-group input[type="email"] {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .email-verify-group button {
+    width: 50%;
+    font-size: 0.8rem;
+    padding: 8px 0;
+    height: auto;
+    margin-left: 0;
+  }
+}
+
