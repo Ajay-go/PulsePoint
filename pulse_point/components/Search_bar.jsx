@@ -31,7 +31,7 @@ function Searchbar() {
   function handle_search_click() {
     const result = fuse.search(search_input);
     const matchedDoctors = result.map((r) => r.item);
-    if(search_input)navigate("/search-results", { state: { results: matchedDoctors } });
+    if (search_input) navigate("/search-results", { state: { results: matchedDoctors } });
   }
 
   const doctorList = [
@@ -315,8 +315,10 @@ function Searchbar() {
         </div>
 
         <div id="floating_chat_button">
-          <button onClick={handle_chat_click}>Chat with AI</button>
+          <button onClick={handle_chat_click}><i class="fas fa-comments">chat with ai</i></button>
+
         </div>
+
       </div>
     </div>
   );

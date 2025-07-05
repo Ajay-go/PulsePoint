@@ -34,12 +34,12 @@ function Appointments_customer_view(props) {
    const slotHour = parseInt(props.time.split(":")[0], 10);
   const currentHour = new Date().getHours();
 
-  
+ 
   if ( !doctorname ||slotHour < currentHour) {
     alert("slot time has passed or missing doctor info :(");
     return ;
   }
-
+    <h1>waiting for confirmation</h1>
     const docId = props.name.replace(/\s+/g, "_").replace(/\./g, "");
     const docRef = doc(db, "appointments", docId);
     const userData = JSON.parse(localStorage.getItem("pulsePointUser"));
