@@ -307,15 +307,15 @@ function Searchbar() {
             </>
           ) : (
             <>
-              <div id="chat_with_ai">
-                <button onClick={handle_chat_click}>Ai Chat <TbMessageChatbot /></button>
-              </div>
-
               <div id="profile_button">
                 <button onClick={handle_profile_click}>Profile <CgProfile /></button>
               </div>
             </>
           )}
+        </div>
+
+        <div id="floating_chat_button">
+          <button onClick={handle_chat_click}>Chat with AI</button>
         </div>
       </div>
     </div>

@@ -99,7 +99,7 @@ main {
   margin-left: 4%;
 }
 
-.signup-left input[type="submit"]:hover{
+.signup-left input[type="submit"]:hover {
   background-color: #d64b5c;
 }
 
@@ -158,14 +158,12 @@ main {
   border-radius: 8px;
 }
 
-
-
 .email-verify-group {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 90%;
-  margin-left: 0;
+  margin-left: 4%;
   gap: 10px;
 }
 
@@ -213,28 +211,29 @@ main {
     height: auto;
     margin-left: 0;
   }
-  header h2{
+
+  header h2 {
     font-size: 2rem;
   }
 }
 
-.email-verify-group input[type="email"] {
-  flex: 1;
-}
+@media (max-width: 480px) {
+  .email-verify-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
 
-.email-verify-group button {
-  padding: 6px 10px;
-  font-size: 0.75rem;
-  background-color: #f05f70;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-left: 10px;
-  white-space: nowrap;
-  height: 38px;
-}
+  .email-verify-group input[type="email"] {
+    width: 100%;
+    margin-left: 0;
+  }
 
-.email-verify-group button:hover {
-  background-color: #d64b5c;
+  .email-verify-group button {
+    width: 50%;
+    font-size: 0.8rem;
+    padding: 8px 0;
+    height: auto;
+    margin-left: 0;
+  }
 }

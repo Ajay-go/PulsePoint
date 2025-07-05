@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './SignupPage.css';
 import { useNavigate } from 'react-router-dom';
-import { database, auth } from '../src/firebase';
-import { ref, set, get, child } from 'firebase/database';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { ImCross } from 'react-icons/im';
+import { doc, setDoc, getDoc, collection, getDocs } from 'firebase/firestore';
+import { firestore, auth } from '../src/firebase';
+
 
 const Signup_page = () => {
   const navigate = useNavigate();
@@ -62,7 +63,6 @@ const Signup_page = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, email } = formData;
-    const dbRef = ref(database);
 
     try {
       if (!verifyButtonClicked) {
@@ -70,30 +70,39 @@ const Signup_page = () => {
         return;
       }
 
-      await auth.currentUser.reload();
-      if (!auth.currentUser.emailVerified) {
-        alert("Email not verified yet. Please verify before signing up.");
+      await auth.currentUser?.reload();
+
+      if (!auth.currentUser || !auth.currentUser.emailVerified) {
+        alert("Email not verified yet.");
         return;
       }
 
-      const usernameSnapshot = await get(child(dbRef, `users/${username}`));
-      if (usernameSnapshot.exists()) {
-        alert("Username already taken. Please choose another.");
+      const uid = auth.currentUser.uid;
+
+      // 🔍 Check if username already exists
+      const usernameDoc = await getDoc(doc(firestore, 'users', username));
+      if (usernameDoc.exists()) {
+        alert("Username already taken.");
         return;
       }
 
-      const allUsersSnapshot = await get(child(dbRef, 'users'));
-      if (allUsersSnapshot.exists()) {
-        const users = allUsersSnapshot.val();
-        const emailExists = Object.values(users).some(user => user.email === email);
-        if (emailExists) {
-          alert("Email already in use. Please use a different email.");
-          return;
-        }
+      // 🔍 Check if email already exists
+      const usersSnapshot = await getDocs(collection(firestore, 'users'));
+      const emailExists = usersSnapshot.docs.some(doc => doc.data().email === email);
+      if (emailExists) {
+        alert("Email already in use.");
+        return;
       }
 
-      await set(ref(database, `users/${username}`), formData);
-      localStorage.setItem('pulsePointUser', JSON.stringify(formData));
+      const userData = {
+        ...formData,
+        uid: uid
+      };
+
+      // ✅ Store in Firestore
+      await setDoc(doc(firestore, 'users', username), userData);
+
+      localStorage.setItem('pulsePointUser', JSON.stringify(userData));
       alert("Signup successful!");
       navigate('/');
     } catch (error) {
@@ -101,6 +110,7 @@ const Signup_page = () => {
       alert("Signup failed: " + error.message);
     }
   };
+
 
   function handle_login_click(){
     navigate('/login');
