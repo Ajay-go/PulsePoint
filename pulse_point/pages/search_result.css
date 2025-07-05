@@ -6,5 +6,5 @@ html, body, #root {
 #search_result{
    margin-top: 2%;
    display: flex;
-   flex-wrap: nowrap;
+   flex-wrap: wrap;
 }

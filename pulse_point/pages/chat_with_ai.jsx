@@ -7,21 +7,30 @@ import { useNavigate } from "react-router-dom";
 
 const TOGETHER_API_KEY = "1d0e8c838a29bc1171ff24364e2c91d3ddaeb57c3fe2db1f0bff5a0a55d33ff37a2e1"; 
 
+
 async function getAIResponse(userMessages, doctorData) {
-  
   const formattedDoctors = doctorData
-    .map((doc) => `• ${doc.name}, Specialty: ${doc.speciality}, Location: ${doc.location || "N/A"}`)
+    .map(
+      (doc) =>
+        `• ${doc.name}, Specialty: ${doc.speciality}, Location: ${doc.location || "N/A"}, Experience: ${doc.experience_years}`
+    )
     .join("\n");
 
-  const last5UserMessages = userMessages.slice(-5).map((msg) => ({
-    role: "user",
-    content: msg.text,
-  }));
+  const lastRelevantMessages = userMessages
+    .slice()
+    .reverse()
+    .filter((msg) => msg.type === "user" || msg.type === "ai")
+    .slice(0, 4)
+    .reverse()
+    .map((msg) => ({
+      role: msg.type === "user" ? "user" : "assistant",
+      content: msg.text,
+    }));
 
   const response = await fetch("https://api.together.xyz/v1/chat/completions", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${TOGETHER_API_KEY.slice(0,-5)}`,
+      Authorization: `Bearer ${TOGETHER_API_KEY.slice(0, -5)}`, // slice if needed
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -33,14 +42,16 @@ async function getAIResponse(userMessages, doctorData) {
 You are PulsePoint AI assistant.
 PulsePoint is a doctor consultation and appointment booking website.
 Greet the user warmly. Respond in 30–40 words.
-When the user shares symptoms, explain them in bullet points.
-If the user asks to suggest doctors, recommend 2–3 doctors **by name** from the list below:
+When the user shares symptoms, explain about symptoms and possible cause in list in separate lines.
+If the user asks to suggest doctors, recommend 2–3 doctors by name from the list below:
 Return doctor names clearly in your response, e.g., "I recommend Dr. Neha Sharma and Dr. Raj Patel".
+If user says thanks or becomes thankful to you, greet back with "Happy to help you!".
+Only answer questions related to healthcare. For other topics, say: "Sorry, I can only help with healthcare-related queries."
 Here is the list of available doctors:
 ${formattedDoctors}
-          `,
+        `,
         },
-        ...last5UserMessages,
+        ...lastRelevantMessages,
       ],
     }),
   });
@@ -55,6 +66,7 @@ function Chat() {
   const [loading, setLoading] = useState(false);
   const [doctorData, setDoctorData] = useState([]);
   const endRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -77,7 +89,7 @@ function Chat() {
     const regex = /Dr\.?\s[A-Z][a-z]+\s[A-Z][a-z]+/g;
     return text.match(regex) || [];
   };
-  const navigate = useNavigate()
+
   const handleSend = async () => {
     if (!input.trim()) return;
 
@@ -89,17 +101,14 @@ function Chat() {
 
     try {
       const aiReply = await getAIResponse(
-        updatedMessages.filter((m) => m.type === "user"),
+        updatedMessages.filter((msg) => msg.type === "user" || msg.type === "ai"),
         doctorData
       );
 
       const aiMessage = { type: "ai", text: aiReply };
       const newMessages = [...updatedMessages, aiMessage];
 
-      // Extract doctor names mentioned in AI's response
       const mentionedDoctorNames = extractDoctorNames(aiReply);
-
-      // Match those names to your doctorData
       const matchedDoctors = doctorData.filter((doc) =>
         mentionedDoctorNames.some((name) =>
           doc.name.toLowerCase().includes(name.toLowerCase())
@@ -133,7 +142,7 @@ function Chat() {
           {messages.map((msg, index) => {
             if (msg.type === "component") {
               return (
-                <div key={index} className="message doctor-tile-wrapper">
+                <div key={index} className="doctor-tile-wrapper">
                   {msg.component}
                 </div>
               );
@@ -143,7 +152,9 @@ function Chat() {
               <div
                 key={index}
                 className={
-                  msg.type === "user" ? "message user-message" : "message ai-message"
+                  msg.type === "user"
+                    ? "message user-message"
+                    : "message ai-message"
                 }
               >
                 {msg.text}
@@ -166,15 +177,26 @@ function Chat() {
           <button onClick={handleSend} disabled={loading}>
             Send
           </button>
-          <button onClick={()=>navigate('/')} disabled={loading}>
-            close
+          <button onClick={() => navigate("/")} disabled={loading}>
+            Close
           </button>
-
         </div>
       </div>
+
       <div
         style={{
-          backgroundColor: '#f05f70',color: 'white',textAlign: 'center',padding: '10px 0',fontSize: '0.9rem',width: '100%',position: 'relative',bottom: '0',left: '0',borderRadius: '0',marginTop: '40px',fontFamily: 'Arial, sans-serif'
+          backgroundColor: "#f05f70",
+          color: "white",
+          textAlign: "center",
+          padding: "10px 0",
+          fontSize: "0.9rem",
+          width: "100%",
+          position: "relative",
+          bottom: "0",
+          left: "0",
+          borderRadius: "0",
+          marginTop: "40px",
+          fontFamily: "Arial, sans-serif",
         }}
       >
         &copy; {new Date().getFullYear()} Pulse Point

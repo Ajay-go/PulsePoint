@@ -21,11 +21,13 @@ function Doc_tile_chat(props) {
 
 
   return (
-    <div id="doctor_details">
+    <div id="container">
+      <div id="doctors">
       <h2>Name: {props.name}</h2>
       <h2>Speciality: {props.speciality || "N/A"}</h2>
-      <h2>Experience: {props.experience ?? props.expirience} years</h2>
+      <h2>Experience: {props.experience_years ?? "N/A"} years</h2>
       <button onClick={handle_book}>Book Appointment</button>
+    </div>
     </div>
   );
 }

@@ -38,7 +38,7 @@ main {
 
 .signup-left {
   flex: 1;
-  padding: 30px;
+  padding: 0px;
   background-color: white;
 }
 
@@ -66,6 +66,7 @@ main {
 #user_data {
   text-align: left;
   width: 100%;
+  margin-top: 0;
 }
 
 #submit_form {
@@ -98,7 +99,7 @@ main {
   margin-left: 4%;
 }
 
-.signup-left input[type="submit"]:hover{
+.signup-left input[type="submit"]:hover {
   background-color: #d64b5c;
 }
 
@@ -124,6 +125,7 @@ main {
 .signup-right h2 {
   font-size: 1.8rem;
   margin-bottom: 10px;
+  color: #000000;
 }
 
 .signup-right p {
@@ -156,7 +158,6 @@ main {
   border-radius: 8px;
 }
 
-
 .email-verify-group {
   display: flex;
   justify-content: space-between;
@@ -169,6 +170,7 @@ main {
 .email-verify-group input[type="email"] {
   flex: 1;
   min-width: 0;
+  margin-left: 4%;
 }
 
 .email-verify-group button {
@@ -182,10 +184,37 @@ main {
   cursor: pointer;
   height: 38px;
   white-space: nowrap;
+  margin-left: 4%;
 }
 
 .email-verify-group button:hover {
   background-color: #d64b5c;
+}
+
+@media (max-width: 850px) {
+  .email-verify-group {
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .email-verify-group input[type="email"] {
+    width: 100%;
+    margin-left: 4%;
+  }
+
+  .email-verify-group button {
+    width: 90%;
+    font-size: 0.8rem;
+    padding: 8px 0;
+    height: auto;
+    margin-left: 0;
+  }
+
+  header h2 {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -208,4 +237,3 @@ main {
     margin-left: 0;
   }
 }
-

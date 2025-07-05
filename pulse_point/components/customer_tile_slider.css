@@ -62,12 +62,11 @@
   }
 }
 
-/* Optional tweaks for very small screens */
 @media screen and (max-width: 480px) {
   #review {
     padding: 6vw 5vw;
     margin-top: 10vh;
-    height: 50vh;
+    height: auto;
   }
 
   #review h2 {

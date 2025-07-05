@@ -9,7 +9,7 @@
   background: linear-gradient(135deg, #e0f7f7 0%, #f3fbfb 100%);
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  max-width: 1200px;
+  max-width: 90%;
 }
 
 /* Optional grouping of doctor sections */
@@ -23,6 +23,8 @@
 /* Responsive layout tweaks */
 @media screen and (max-width: 768px) {
   #slider {
+    display: flex;
+    flex-wrap: wrap;
     padding: 1rem;
     gap: 1rem;
     margin: 1rem;
